@@ -1,9 +1,17 @@
 import 'package:fitness/home/homePage.dart';
 import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(const MyApp());
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
+import 'package:fitness/onboarding/onboarding_screen.dart';
+int? isViewed;
+void main() async {
+  SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  isViewed = prefs.getInt('onBoard');
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -13,13 +21,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Fitness App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.colorTheme),
         useMaterial3: true,
       ),
-      home: const HomePage(title: 'Fitness'),
-      debugShowCheckedModeBanner: false,
+      home: isViewed != 0 ? OnBoardingScreen() : HomePage(title: 'Fitness',),
     );
   }
 }
