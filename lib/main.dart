@@ -1,11 +1,20 @@
 
 import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
+import 'package:fitness/onboarding/onboarding_screen.dart';
 
 import 'components/menu.dart';
+int? isViewed;
+void main() async {
+  SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  isViewed = prefs.getInt('onBoard');
+  runApp(MyApp());
 
-void main() {
-  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -14,14 +23,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Fitness App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.colorTheme),
         useMaterial3: true,
       ),
-     home: Menu(),
-     // onGenerateRoute: AppRouter.generateRoute,
-      debugShowCheckedModeBanner: false,
+
+      home: isViewed != 0 ? OnBoardingScreen() : Menu(),
+
     );
   }
 }
