@@ -1,6 +1,8 @@
-import 'package:fitness/home/homePage.dart';
+
 import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
+
+import 'components/menu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,13 +14,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return  MaterialApp(
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.colorTheme),
         useMaterial3: true,
       ),
-      home: const HomePage(title: 'Fitness'),
+     home: Menu(),
+     // onGenerateRoute: AppRouter.generateRoute,
       debugShowCheckedModeBanner: false,
     );
   }
