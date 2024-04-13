@@ -1,15 +1,18 @@
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
+import 'package:fitness/history/history.dart';
 import 'package:fitness/home/homePage.dart';
 import 'package:fitness/profile/profile.dart';
 import 'package:fitness/setting/setting.dart';
 import 'package:fitness/untils/color.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
 class Menu extends StatefulWidget {
-  const Menu({super.key});
+  final int? index;
+
+
+  Menu({Key? key,  this.index}) : super(key: key);
 
   @override
   _MenuState createState() => _MenuState();
@@ -18,7 +21,26 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   int _index = 0;
   String title = "HOME";
+  @override
+  void initState() {
+    super.initState();
+if(widget.index!=null) {
+  _index = widget.index!;
+  switch(_index) {
+    case 0 :title = 'TRANG CHỦ';
+    break;
+    case 1: title = "LỊCH SỬ";
+    break;
+    case 2: title = "HỒ SƠ";
+    break;
+    case 3: title = "CÀI ĐẶT";
+    break;
+    default: title = "Lỗi";
+  }
+}
 
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +50,7 @@ class _MenuState extends State<Menu> {
             children: [
               Container(
                 color: AppColors.backgroundColor,
-                child: (_index==0)?const HomePage():(_index==2)? const Profile() :const Setting()
+                child: (_index==0)?const HomePage():(_index==2)? const Profile() : (_index==1) ? const History() :const Setting()
               ),
 
 

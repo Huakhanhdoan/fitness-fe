@@ -18,11 +18,11 @@ class _HomePageState extends State<HomePage> {
   late Stream<PedestrianStatus> _pedestrianStatusStream;
   String _status = '?', _steps = '0';
   late DateTime _lastUpdate;
-  final int _stepGoal = 10000;
+  final int _stepGoal = 4000;
   int _stepCount = 0;
 
-  double calories = 120.3;
-  double distance = 1.21;
+  double calories = 0;
+  double distance = 0;
 
   @override
   void initState() {
@@ -204,6 +204,7 @@ class _HomePageState extends State<HomePage> {
             getOptions(
                 Icons.social_distance, "Tổng khoảng cách", "km", distance),
             getOptions(Icons.timer, "Tổng thời gian", "phút", 360),
+            const SizedBox(height: 100,)
           ],
         )
       ]),
@@ -273,7 +274,8 @@ class _HomePageState extends State<HomePage> {
   void loadLastUpdate() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _lastUpdate = DateTime.parse(
-        prefs.getString('lastUpdate') ?? DateTime.now().toString());
+        prefs.getString('lastUpdate') ?? DateTime.now().toString()
+    );
   }
 
   void onData(StepCount event) {
@@ -299,6 +301,7 @@ class _HomePageState extends State<HomePage> {
       calories = mins * ((0.035 * weight) + ((speed * speed) / height) * 0.029 * weight);
       calories = double.parse(calories.toStringAsFixed(2));
       distance = _stepCount*0.008;
+      distance = double.parse(distance.toStringAsFixed(2));
     });
   }
 

@@ -28,7 +28,7 @@ class _ProfileState extends State<Profile> {
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white70,
+              color: AppColors.containerColor,
               border: Border.all(
                 color: Colors.grey, // Màu sắc của viền
                 width: 1, // Độ dày của viền
@@ -68,7 +68,6 @@ class _ProfileState extends State<Profile> {
                 height: 1,
                 color: Colors.grey,
               ),
-              getOptions(Icons.male, "Giới tính", "Nam"),
             ]),
           ),
         ),
@@ -83,7 +82,7 @@ class _ProfileState extends State<Profile> {
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white70,
+              color: AppColors.containerColor,
               border: Border.all(
                 color: Colors.grey, // Màu sắc của viền
                 width: 1, // Độ dày của viền
@@ -115,7 +114,8 @@ class _ProfileState extends State<Profile> {
                   Icons.local_fire_department_rounded, "Calories", "500Kcal"),
             ]),
           ),
-        )
+        ),
+        const SizedBox(height: 100,)
       ]),
     );
   }
@@ -141,7 +141,7 @@ class _ProfileState extends State<Profile> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(_nameCard),
+                child: Text(_nameCard, style: TextStyle(color: AppColors.textColor),),
               ),
               const Spacer(),
               Text(

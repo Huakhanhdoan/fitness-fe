@@ -1,5 +1,8 @@
 import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../components/menu.dart';
 
 class Setting extends StatefulWidget {
   const Setting({super.key});
@@ -15,7 +18,23 @@ class _SettingState extends State<Setting> {
   double distance = 2.12;
   bool isWater = true;
   bool isDarkMode = false;
+  @override
+  void initState() {
+    super.initState();
+    loadDarkMode();
+  }
 
+  void loadDarkMode() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isDarkMode = prefs.getBool('isDarkMode') ?? false;
+    });
+  }
+
+  void saveDarkMode(bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isDarkMode', value);
+  }
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -32,7 +51,7 @@ class _SettingState extends State<Setting> {
           ),
           Container(
             decoration: BoxDecoration(
-              color: Colors.white70,
+              color: AppColors.containerColor,
               border: Border.all(
                 color: Colors.grey, // Màu sắc của viền
                 width: 1, // Độ dày của viền
@@ -62,7 +81,7 @@ class _SettingState extends State<Setting> {
                               fontWeight: FontWeight.bold,
                               fontSize: 17),
                         ),
-                        const Text('Kcal'),
+                         Text('Kcal', style: TextStyle(color: AppColors.textColor),),
                       ],
                     ),
                     Container(
@@ -79,7 +98,7 @@ class _SettingState extends State<Setting> {
                               fontWeight: FontWeight.bold,
                               fontSize: 17),
                         ),
-                        const Text('Các bước'),
+                        Text('Các bước',style: TextStyle(color: AppColors.textColor)),
                       ],
                     ),
                     Container(
@@ -96,7 +115,7 @@ class _SettingState extends State<Setting> {
                               fontWeight: FontWeight.bold,
                               fontSize: 17 /**/),
                         ),
-                        const Text('Km'),
+                         Text('Km', style: TextStyle(color: AppColors.textColor)),
                       ],
                     ),
                   ],
@@ -107,7 +126,7 @@ class _SettingState extends State<Setting> {
                 height: 1,
                 color: Colors.grey,
               ),
-              getOptions(Icons.history, "Lịch sử"),
+              getOptions(Icons.history, "Lịch sử", ),
               Container(
                 width: MediaQuery.of(context).size.width - 40,
                 height: 1,
@@ -126,7 +145,7 @@ class _SettingState extends State<Setting> {
           ),
           Container(
             decoration: BoxDecoration(
-              color: Colors.white70,
+              color: AppColors.containerColor,
               border: Border.all(
                 color: Colors.grey, // Màu sắc của viền
                 width: 1, // Độ dày của viền
@@ -168,16 +187,28 @@ class _SettingState extends State<Setting> {
                       value: isDarkMode,
                       activeColor: AppColors.colorTheme,
                       onChanged: (bool value) {
+                        saveDarkMode(value);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) =>
+                                Menu(index:3)
+                            )
+                        );
                         // This is called when the user toggles the switch.
                         setState(() {
+
                           isDarkMode = value;
                           if(isDarkMode) {
                             AppColors.colorTheme = Colors.redAccent;
                             AppColors.backgroundColor = Colors.black45;
+                            AppColors.containerColor = Colors.black38;
+                            AppColors.textColor = Colors.white;
                           }
                           else {
                             AppColors.colorTheme =  const Color.fromRGBO(48, 237, 102,1);
                             AppColors.backgroundColor = Colors.white;
+                            AppColors.containerColor = Colors.white70;
+                            AppColors.textColor = Colors.black;
                           }
 
                         });
@@ -229,7 +260,7 @@ class _SettingState extends State<Setting> {
           ),
           Container(
             decoration: BoxDecoration(
-              color: Colors.white70,
+              color: AppColors.containerColor,
               border: Border.all(
                 color: Colors.grey, // Màu sắc của viền
                 width: 1, // Độ dày của viền
@@ -273,7 +304,7 @@ class _SettingState extends State<Setting> {
                 getOptions(Icons.error, 'Giới thiệu'),
                 ]
             )
-          )
+          ), const SizedBox(height: 100,)
         ]),
       ),
     );
@@ -296,7 +327,7 @@ class _SettingState extends State<Setting> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(_nameCard),
+                child: Text(_nameCard, style: TextStyle(color: AppColors.textColor)),
               ),
               const Spacer(),
               const Icon(Icons.keyboard_arrow_right_sharp),

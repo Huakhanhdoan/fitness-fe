@@ -1,4 +1,5 @@
 
+import 'package:fitness/account/loginPage.dart';
 import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,7 +33,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
 
-      home: isViewed != 0 ? OnBoardingScreen() : Menu(),
+
+      home: isViewed != 0 ? Menu() : Menu(),
+
 
     );
   }
