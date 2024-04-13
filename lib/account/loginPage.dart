@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-// import 'register_page.dart';
+import '../home/homePage.dart';
+import 'registerPage.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -38,10 +39,11 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(fontSize: 18, color: Colors.black),
                   decoration: InputDecoration(
                       labelText: 'Email',
-                      prefixIcon: Container(
-                        width: 50,
 
-                      ),
+                      // prefixIcon: Container(
+                      //   width: 10,
+                      //
+                      // ),
                       border: OutlineInputBorder(
                           borderSide: BorderSide(
                               color: Color(0xffCED0D2),
@@ -60,9 +62,10 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
                 decoration: InputDecoration(
                     labelText: 'Password',
-                    prefixIcon: Container(
-                      width: 50,
-                    ),
+
+                    // prefixIcon: Container(
+                    //   width: 50,
+                    // ),
                     border: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Color(0xffCED0D2),
@@ -86,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: double.infinity,
                   height: 52,
                   child: MaterialButton(
-                    onPressed: () {},
+                    onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(title: '',)));},
                     child: Text(
                       'Log In',
                       style: TextStyle(fontSize: 18, color: Colors.white),
@@ -108,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                           TextSpan(
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  // Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()));
                                 },
                               text: 'Sign up for a new account',
                               style: TextStyle(
