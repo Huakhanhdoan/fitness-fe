@@ -1,3 +1,5 @@
+import 'package:fitness/account/loginPage.dart';
+import 'package:fitness/account/registerPage.dart';
 import 'package:fitness/home/homePage.dart';
 import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.colorTheme),
         useMaterial3: true,
       ),
-      home: const HomePage(title: 'Fitness'),
+      home:  RegisterPage(),
       debugShowCheckedModeBanner: false,
     );
   }
