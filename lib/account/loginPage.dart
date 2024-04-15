@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import '../components/menu.dart';
-import '../home/homePage.dart';
+
+import '../onboarding/onboarding_screen.dart';
 import 'registerPage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: double.infinity,
                   height: 52,
                   child: MaterialButton(
-                    onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => Menu()));},
+                    onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => OnBoardingScreen()));},
                     child: const Text(
                       'Log In',
                       style: TextStyle(fontSize: 18, color: Colors.white),

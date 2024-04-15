@@ -55,6 +55,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               'Skip',
               style: TextStyle(
                 color: Colors.black,
+                fontWeight: FontWeight.bold,
                 fontSize: 15,
               ),
             ),
@@ -76,7 +77,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             ],
           ),
           Container(
-            alignment: Alignment(0, 0.8),
+            alignment: const Alignment(0, 0.8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -88,18 +89,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     );
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 136, 189, 250),
+                      color: const Color.fromARGB(255, 136, 189, 250),
                       borderRadius: BorderRadius.circular(50),
                     ),
-                    child: const Row(
-                      children: [
-                        Icon(
-                          Icons.arrow_back_ios_new,
-                          color: Colors.white,
-                        )
-                      ],
+                    child: const Icon(
+                      Icons.arrow_back_ios_new,
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -107,23 +104,19 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 InkWell(
                   onTap: () async {
                     _controller.nextPage(
-                      duration: Duration(microseconds: 300),
+                      duration: const Duration(microseconds: 300),
                       curve: Curves.bounceIn,
                     );
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                     decoration: BoxDecoration(
                       color: Colors.blue.shade800,
                       borderRadius: BorderRadius.circular(50),
                     ),
-                    child: const Row(
-                      children: [
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.white,
-                        )
-                      ],
+                    child: const Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.white,
                     ),
                   ),
                 ),
