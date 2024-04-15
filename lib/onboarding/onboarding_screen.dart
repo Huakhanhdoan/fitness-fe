@@ -36,6 +36,16 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     await prefs.setInt('onBoard', isViewed);
   }
 
+  var Pages = [
+    IntroPage1(),
+    IntroPage2(),
+    IntroPage3(),
+    IntroPage4(),
+    IntroPage5(),
+    IntroPage6(),
+    IntroPage7(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,15 +74,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         children: [
           PageView(
             controller: _controller,
-            children: const [
-              IntroPage1(),
-              IntroPage2(),
-              IntroPage3(),
-              IntroPage4(),
-              IntroPage5(),
-              IntroPage6(),
-              IntroPage7(),
-            ],
+            children: Pages
           ),
           Container(
             alignment: Alignment(0, 0.8),
@@ -81,10 +83,15 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               children: [
                 InkWell(
                   onTap: () async {
+                    await _storeOnBoardInfo();
                     _controller.previousPage(
-                      duration: const Duration(microseconds: 300),
+                      duration: const Duration(microseconds: 15000),
                       curve: Curves.bounceIn,
                     );
+                    if(currentIndex > 0){
+                      currentIndex -= 1;
+                      print(currentIndex);
+                    }
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
@@ -105,10 +112,21 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 SmoothPageIndicator(controller: _controller, count: 7),
                 InkWell(
                   onTap: () async {
+                    // await _storeOnBoardInfo();
                     _controller.nextPage(
-                      duration: Duration(microseconds: 300),
+                      duration: Duration(microseconds: 15000),
                       curve: Curves.bounceIn,
                     );
+                    currentIndex += 1;
+                    print(currentIndex);
+                    if(currentIndex == 7){
+                      Navigator.pushReplacement(
+                        context, MaterialPageRoute(builder: (context) => HomePage(title: 'Fitness',)));
+                    }
+                    // if(Pages.last == const IntroPage7()){
+                      // Navigator.pushReplacement(
+                      //   context, MaterialPageRoute(builder: (context) => HomePage(title: 'Fitness',)));
+                    // }
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
