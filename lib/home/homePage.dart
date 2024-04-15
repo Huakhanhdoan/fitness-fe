@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
           radius: 120.0,
           lineWidth: 23.0,
           animation: true,
-          percent: _stepCount / _stepGoal,
+          percent: (_stepCount<_stepGoal) ? _stepCount / _stepGoal:1 ,
           startAngle: 180,
           center: CircularPercentIndicator(
             radius: 90,
@@ -300,7 +300,7 @@ class _HomePageState extends State<HomePage> {
       double mins = (_stepCount / 100); // Total minutes walked, assuming 100 steps per minute
       calories = mins * ((0.035 * weight) + ((speed * speed) / height) * 0.029 * weight);
       calories = double.parse(calories.toStringAsFixed(2));
-      distance = _stepCount*0.008;
+      distance = _stepCount*0.0008;
       distance = double.parse(distance.toStringAsFixed(2));
     });
   }

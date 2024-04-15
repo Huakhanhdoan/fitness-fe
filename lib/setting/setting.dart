@@ -188,7 +188,7 @@ class _SettingState extends State<Setting> {
                       activeColor: AppColors.colorTheme,
                       onChanged: (bool value) {
                         saveDarkMode(value);
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(builder: (context) =>
                                 Menu(index:3)
