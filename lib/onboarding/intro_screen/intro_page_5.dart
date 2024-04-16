@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:numberpicker/numberpicker.dart';
 
 class IntroPage5 extends StatefulWidget {
   const IntroPage5({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class IntroPage5 extends StatefulWidget {
 
 class _IntroPage5 extends State<IntroPage5> {
   String level = 'Male';
-
+  String _currentIntValue = 'English';
   final items = [
     'English',
     'Việt Nam',
@@ -35,7 +36,7 @@ class _IntroPage5 extends State<IntroPage5> {
                   'assets/images/language.svg',
                   width: 150,
                   height: 150,
-                  color: Colors.blue.shade800,
+                  color: Colors.red.shade800,
                 ),
                 const SizedBox(
                   height: 50,
@@ -52,41 +53,19 @@ class _IntroPage5 extends State<IntroPage5> {
                 const SizedBox(
                   height: 15,
                 ),
-                CupertinoPageScaffold(
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          items[index],
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 220,
-                          child: CupertinoPicker(
-                            backgroundColor: Colors.white,
-                            itemExtent: 40,
-                            onSelectedItemChanged: (index) {
-                              setState(() {
-                                this.index = index;
-                              });
-                            },
-                            children: items
-                                .map((item) => Center(
-                                      child: Text(
-                                        item,
-                                        style: TextStyle(fontSize: 25),
-                                      ),
-                                    ))
-                                .toList(),
-                          ),
-                        ),
-                      ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.forward,
+                        color: Colors.red,
+                        size: 30,
+                      ),
                     ),
-                  ),
+                    
+                  ],
                 ),
               ],
             ),

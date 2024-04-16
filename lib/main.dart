@@ -1,17 +1,18 @@
-import 'package:fitness/home/homePage.dart';
+import 'package:fitness/account/loginPage.dart';
+import 'package:fitness/onboarding/onboarding_screen.dart';
 import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
-import 'package:fitness/onboarding/onboarding_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 int? isViewed;
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    SystemUiOverlayStyle(statusBarColor: Colors.transparent)
+  );
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isViewed = prefs.getInt('onBoard');
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -21,13 +22,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Fitness App',
+      
+      title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.colorTheme),
         useMaterial3: true,
       ),
-      home: isViewed != 0 ? OnBoardingScreen() : HomePage(title: 'Fitness',),
+      home:  isViewed != 0 ? OnBoardingScreen() : LoginPage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

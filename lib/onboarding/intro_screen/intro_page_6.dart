@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:numberpicker/numberpicker.dart';
 
 class IntroPage6 extends StatefulWidget {
   const IntroPage6({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class IntroPage6 extends StatefulWidget {
 
 class _IntroPage6 extends State<IntroPage6> {
   String level = 'Male';
-
+  int _currentIntValue = 1500;
   final items = [
     '500',
     '1000',
@@ -73,7 +74,7 @@ class _IntroPage6 extends State<IntroPage6> {
                   'assets/images/goal.svg',
                   width: 150,
                   height: 150,
-                  color: Colors.blue.shade800,
+                  color: Colors.red.shade800,
                 ),
                 const SizedBox(
                   height: 50,
@@ -90,42 +91,45 @@ class _IntroPage6 extends State<IntroPage6> {
                 const SizedBox(
                   height: 15,
                 ),
-                CupertinoPageScaffold(
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          items[index] + ' Bước',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 220,
-                          child: CupertinoPicker(
-                            backgroundColor: Colors.white,
-                            looping: true,
-                            itemExtent: 40,
-                            onSelectedItemChanged: (index) {
-                              setState(() {
-                                this.index = index;
-                              });
-                            },
-                            children: items
-                                .map((item) => Center(
-                                      child: Text(
-                                        item,
-                                        style: TextStyle(fontSize: 25),
-                                      ),
-                                    ))
-                                .toList(),
-                          ),
-                        ),
-                      ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.forward,
+                        color: Colors.red,
+                        size: 30,
+                      ),
                     ),
-                  ),
+                    NumberPicker(
+                      itemCount: 5,
+                      value: _currentIntValue,
+                      minValue: 500,
+                      maxValue: 20000,
+                      step: 500,
+                      haptics: true,
+                      onChanged: (value) =>
+                          setState(() => _currentIntValue = value),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: Colors.black26),
+                      ),
+                      selectedTextStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                          fontSize: 26),
+                      textStyle:
+                          const TextStyle(color: Colors.green, fontSize: 20),
+                    ),
+                    const Text(
+                      " Bước",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                          fontSize: 23),
+                    )
+                  ],
                 ),
               ],
             ),

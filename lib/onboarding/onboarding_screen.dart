@@ -1,7 +1,7 @@
+import 'package:fitness/account/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fitness/home/homePage.dart';
 import 'package:fitness/onboarding/intro_screen/intro_page_1.dart';
 import 'package:fitness/onboarding/intro_screen/intro_page_2.dart';
 import 'package:fitness/onboarding/intro_screen/intro_page_3.dart';
@@ -9,6 +9,7 @@ import 'package:fitness/onboarding/intro_screen/intro_page_4.dart';
 import 'package:fitness/onboarding/intro_screen/intro_page_5.dart';
 import 'package:fitness/onboarding/intro_screen/intro_page_6.dart';
 import 'package:fitness/onboarding/intro_screen/intro_page_7.dart';
+import '../components/menu.dart';
 class OnBoardingScreen extends StatefulWidget {
   @override
   _OnBoardingScreenState createState() => _OnBoardingScreenState();
@@ -41,7 +42,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     IntroPage2(),
     IntroPage3(),
     IntroPage4(),
-    IntroPage5(),
     IntroPage6(),
     IntroPage7(),
   ];
@@ -58,12 +58,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             onPressed: () async {
               await _storeOnBoardInfo();
               Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => HomePage(title: '',)));
+                  context, MaterialPageRoute(builder: (context) =>  LoginPage()));
             },
             child: const Text(
               'Skip',
               style: TextStyle(
                 color: Colors.black,
+                fontWeight: FontWeight.bold,
                 fontSize: 15,
               ),
             ),
@@ -77,7 +78,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             children: Pages
           ),
           Container(
-            alignment: Alignment(0, 0.8),
+            alignment: const Alignment(0, 0.9),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -90,26 +91,28 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     );
                     if(currentIndex > 0){
                       currentIndex -= 1;
-                      print(currentIndex);
                     }
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 136, 189, 250),
+                      color: Colors.red.shade200,
                       borderRadius: BorderRadius.circular(50),
                     ),
-                    child: const Row(
-                      children: [
-                        Icon(
-                          Icons.arrow_back_ios_new,
-                          color: Colors.white,
-                        )
-                      ],
+                    child: const Icon(
+                      Icons.arrow_back_ios_new,
+                      color: Colors.white,
                     ),
                   ),
                 ),
-                SmoothPageIndicator(controller: _controller, count: 7),
+                SmoothPageIndicator(
+                  controller: _controller, 
+                  count: 6,
+                  effect: SlideEffect(
+                    dotColor: Colors.grey,
+                    activeDotColor: Colors.red,
+                  ),
+                ),
                 InkWell(
                   onTap: () async {
                     // await _storeOnBoardInfo();
@@ -118,10 +121,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       curve: Curves.bounceIn,
                     );
                     currentIndex += 1;
-                    print(currentIndex);
-                    if(currentIndex == 7){
+                    if(currentIndex == 6){
                       Navigator.pushReplacement(
-                        context, MaterialPageRoute(builder: (context) => HomePage(title: 'Fitness',)));
+                        context, MaterialPageRoute(builder: (context) => LoginPage()));
                     }
                     // if(Pages.last == const IntroPage7()){
                       // Navigator.pushReplacement(
@@ -129,18 +131,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     // }
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                     decoration: BoxDecoration(
-                      color: Colors.blue.shade800,
+                      color: Colors.red.shade800,
                       borderRadius: BorderRadius.circular(50),
                     ),
-                    child: const Row(
-                      children: [
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.white,
-                        )
-                      ],
+                    child: const Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.white,
                     ),
                   ),
                 ),

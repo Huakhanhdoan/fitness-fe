@@ -11,70 +11,7 @@ class IntroPage2 extends StatefulWidget {
 
 class _IntroPage2 extends State<IntroPage2> {
   String level = 'Male';
-
-  final items = [
-    '40',
-    '41',
-    '42',
-    '43',
-    '44',
-    '45',
-    '46',
-    '47',
-    '48',
-    '49',
-    '50',
-    '51',
-    '52',
-    '53',
-    '54',
-    '55',
-    '56',
-    '57',
-    '58',
-    '59',
-    '60',
-    '61',
-    '62',
-    '63',
-    '64',
-    '65',
-    '66',
-    '67',
-    '68',
-    '69',
-    '70',
-    '71',
-    '72',
-    '73',
-    '74',
-    '75',
-    '76',
-    '77',
-    '78',
-    '79',
-    '80',
-    '81',
-    '82',
-    '83',
-    '84',
-    '85',
-    '86',
-    '87',
-    '88',
-    '89',
-    '90',
-    '91',
-    '92',
-    '93',
-    '94',
-    '95',
-    '96',
-    '97',
-    '98',
-    '99',
-    '100',
-  ];
+  int userWeight = 50;
 
   int index = 0;
 
@@ -94,12 +31,12 @@ class _IntroPage2 extends State<IntroPage2> {
                   'assets/images/weight.svg',
                   width: 150,
                   height: 150,
-                  color: Colors.blue.shade800,
+                  color: Colors.red.shade800,
                 ),
                 const SizedBox(
                   height: 50,
                 ),
-                Text(
+                const Text(
                   'BẠN NẶNG BAO NHIÊU?',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -109,47 +46,35 @@ class _IntroPage2 extends State<IntroPage2> {
                   ),
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 35,
                 ),
-                CupertinoPageScaffold(
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          items[index] + ' Kg',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 220,
-                          child: CupertinoPicker(
-                            backgroundColor: Colors.white,
-                            looping: true,
-                            itemExtent: 50,
-                            onSelectedItemChanged: (index) {
-                              setState(() {
-                                this.index = index;
-                              });
-                            },
-                            children: items
-                                .map(
-                                  (item) => Center(
-                                    child: Text(
-                                      item,
-                                      style: TextStyle(fontSize: 25),
-                                    ),
-                                  ),
-                                )
-                                .toList(),
-                          ),
-                        ),
-                      ],
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Slider(
+                      value: userWeight.toDouble(),
+                      min: 0,
+                      max: 200,
+                      divisions: 200, // Số bước giữa min và max
+                      onChanged: (value) {
+                        //  saveValues();
+                        setState(() {
+                          userWeight = value.round();
+                        });
+                      },
                     ),
-                  ),
-                ),
+                    SizedBox(height: 20,),
+                    Center(
+                      child: Text(
+                        'Cân nặng của bạn: $userWeight' 'kg',
+                        style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green),
+                      ),
+                    ),
+                  ],
+                )
               ],
             ),
           ),
