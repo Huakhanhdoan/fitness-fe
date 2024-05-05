@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:date_picker_plus/date_picker_plus.dart';
 
 class IntroPage4 extends StatefulWidget {
-  const IntroPage4({Key? key}) : super(key: key);
+  const IntroPage4({super.key});
 
   @override
   _IntroPage4 createState() => _IntroPage4();
@@ -19,7 +18,7 @@ class _IntroPage4 extends State<IntroPage4> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 40),
+        padding: const EdgeInsets.symmetric(horizontal: 40),
         children: [
           Center(
             child: Column(
@@ -34,9 +33,9 @@ class _IntroPage4 extends State<IntroPage4> {
                   color: Colors.red.shade800,
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
-                Text(
+                const Text(
                   'NGÀY SINH CỦA BẠN?',
                   textAlign: TextAlign.center,
                   style: TextStyle(

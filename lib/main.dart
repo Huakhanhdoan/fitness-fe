@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.colorTheme),
         useMaterial3: true,
       ),
-      home:  isViewed != 0 ? OnBoardingScreen() : LoginPage(),
+      home:  LoginPage(),
       debugShowCheckedModeBanner: false,
     );
   }
