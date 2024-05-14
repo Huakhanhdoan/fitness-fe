@@ -1,3 +1,4 @@
+import 'package:fitness/profile/heart.dart';
 import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
 
@@ -68,6 +69,12 @@ class _ProfileState extends State<Profile> {
                 height: 1,
                 color: Colors.grey,
               ),
+              getOptions(Icons.monitor_heart, "Nhịp tim", "121"),
+              Container(
+                width: MediaQuery.of(context).size.width - 40,
+                height: 1,
+                color: Colors.grey,
+              ),
             ]),
           ),
         ),
@@ -126,7 +133,16 @@ class _ProfileState extends State<Profile> {
       String _data,
       ) {
     return GestureDetector(
-      onTap: () {},
+
+      onTap: () {
+        if(_nameCard == "Nhịp tim") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>  Heart()),
+          );
+        }
+      },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListTile(

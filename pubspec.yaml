@@ -43,6 +43,10 @@ dependencies:
   pedometer: ^4.0.1
   permission_handler: ^11.3.1
   numberpicker: ^2.1.2
+  heart_bpm: ^2.0.0+0
+  flutter_map: ^6.1.0
+  location: ^6.0.2
+  flutter_map_location_marker: ^8.0.8
 
 
 dev_dependencies:
