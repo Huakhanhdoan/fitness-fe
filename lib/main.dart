@@ -4,6 +4,8 @@ import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'components/menu.dart';
 int? isViewed;
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.colorTheme),
         useMaterial3: true,
       ),
-      home:  LoginPage(),
+      home:  const Menu(),
       debugShowCheckedModeBanner: false,
     );
   }

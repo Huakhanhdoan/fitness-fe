@@ -17,7 +17,7 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  var map = const MyMap();
+  var map =  MyMap();
   int _index = 0;
   String title = "HOME";
 
