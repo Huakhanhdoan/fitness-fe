@@ -1,16 +1,16 @@
-# fitness
+# ỨNG DỤNG THEO DÕI SỨC KHỎE
 
-A new Flutter project.
+Bao gồm một số chức năng chính như 
+- Theo dõi bước chân
+- Đo lượng calo tiêu thụ
+- Đo nhịp tim
+- Theo dõi lộ trình vận động
 
-## Getting Started
+# MỘT SỐ UI chính
+![image](https://github.com/Huakhanhdoan/fitness-fe/assets/100206720/f1d6945c-003b-4759-8ccc-c2c365f515eb)
+![image](https://github.com/Huakhanhdoan/fitness-fe/assets/100206720/6c72320b-4825-4d21-90d5-ba0e074ea9fb)
+![image](https://github.com/Huakhanhdoan/fitness-fe/assets/100206720/21e42f0f-e3ad-4a63-94ba-523083687c5b)
+![image](https://github.com/Huakhanhdoan/fitness-fe/assets/100206720/02779b7c-3cb2-42f8-8fd3-19ea155d31c7)
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
