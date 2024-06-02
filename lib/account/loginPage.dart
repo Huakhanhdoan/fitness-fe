@@ -1,5 +1,6 @@
 import 'package:fitness/components/menu.dart';
 import 'package:fitness/home/homePage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -15,21 +16,40 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: Container(
         padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
         constraints: const BoxConstraints.expand(),
         color: Colors.white,
         child: SingleChildScrollView(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+
               const SizedBox(
                 height: 140,
               ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
+                child: Container(
+                    width: 70,
+                    height: 70,
+                    padding: EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Color(0xffd8d8d8)),
+                    child: FlutterLogo()
+                ),
+              ),
+
               const Padding(
-                padding: EdgeInsets.fromLTRB(0, 40, 0, 6),
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
                 child: Text(
-                  'Welcome back!',
-                  style: TextStyle(fontSize: 22, color: Color(0xff333333)),
+                    'Hello\nWelcome back!',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xff333333),
+                      fontSize: 30,)
                 ),
               ),
               const Text(
@@ -37,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                 style: TextStyle(fontSize: 16, color: Color(0xff606470)),
               ),
               const Padding(
-                padding: EdgeInsets.fromLTRB(0, 80, 0, 20),
+                padding: EdgeInsets.fromLTRB(0, 30, 0, 20),
                 child: TextField(
                   style: TextStyle(fontSize: 18, color: Colors.black),
                   decoration: InputDecoration(
@@ -97,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                       'Log In',
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
-                    color: const Color(0xff3277D8),
+                    color: const Color(0xff50d832),
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(6))
                     ),
@@ -118,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                                 },
                               text: 'Sign up for a new account',
                               style: const TextStyle(
-                                  color: Color(0xff3277D8), fontSize: 16
+                                  color: Color(0xff50d832), fontSize: 16
                               )
                           )
                         ]
