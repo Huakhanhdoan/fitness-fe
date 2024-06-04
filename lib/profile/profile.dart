@@ -79,7 +79,7 @@ class _ProfileState extends State<Profile> {
           ),
         ),
         const Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: EdgeInsets.only(left: 20, right: 20),
           child: Text(
             "Thiết lập mục tiêu",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),

@@ -1,9 +1,9 @@
 import 'package:fitness/onboarding/onboarding_screen.dart';
+import 'package:fitness/service/auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import '../components/menu.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'loginPage.dart';
-import 'package:fitness/home/homePage.dart';
 
 
 class RegisterPage extends StatefulWidget {
@@ -12,12 +12,44 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  TextEditingController _nameController = new TextEditingController();
-  TextEditingController _emailController = new TextEditingController();
-  TextEditingController _passController = new TextEditingController();
-  TextEditingController _phoneController = new TextEditingController();
-
-
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _locationController = TextEditingController();
+  Future<void> _register() async {
+    try {
+      final token = await register(
+        _nameController.text,
+        _emailController.text,
+        _passController.text,
+        _phoneController.text,
+        _locationController.text,
+      );
+      if (token != null) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('tokenRegister', token);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => OnBoardingScreen()),
+        );
+      }
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text('Registration Failed'),
+          content: Text(e.toString()),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,6 +109,24 @@ class _RegisterPageState extends State<RegisterPage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                 child: TextField(
+                  controller: _locationController,
+                  style: const TextStyle(fontSize: 18, color: Colors.black),
+                  decoration: const InputDecoration(
+
+                      labelText: 'Location',
+                      // prefixIcon: Container(
+                      //   width: 50,
+                      // ),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xffCED0D2), width: 1),
+                          borderRadius: BorderRadius.all(Radius.circular(6))
+                      )
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                child: TextField(
                   controller: _emailController,
                   style: const TextStyle(fontSize: 18, color: Colors.black),
                   decoration: const InputDecoration(
@@ -114,14 +164,14 @@ class _RegisterPageState extends State<RegisterPage> {
                   width: double.infinity,
                   height: 52,
                   child: MaterialButton(
-                    onPressed: _onSignUpClicked,
-                    child: const Text(
-                      'Signup',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
+                    onPressed: _register,
                     color: const Color(0xff3277D8),
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(6))
+                    ),
+                    child: const Text(
+                      'Signup',
+                      style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
                 ),
@@ -158,10 +208,5 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  _onSignUpClicked() {
 
-
-    Navigator.push(context, MaterialPageRoute(builder: (context) => OnBoardingScreen()));
-
-  }
 }

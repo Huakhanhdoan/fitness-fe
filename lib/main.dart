@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.colorTheme),
         useMaterial3: true,
       ),
-      home:  const Menu(),
+      home:  LoginPage(),
       debugShowCheckedModeBanner: false,
     );
   }

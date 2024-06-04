@@ -17,7 +17,7 @@ class _SettingState extends State<Setting> {
   double step = 2210;
   double distance = 2.12;
   bool isWater = true;
-  late bool isDarkMode  = false ;
+  late bool isDarkMode = false ;
 
   @override
   void initState() {

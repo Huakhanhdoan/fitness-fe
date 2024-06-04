@@ -5,6 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../onboarding/onboarding_screen.dart';
+import '../service/auth.dart';
 import 'registerPage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,6 +14,35 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  Future<void> _login() async {
+    try {
+      final token = await login(_emailController.text, _passwordController.text);
+      if (token != null) {
+        // Chuyển hướng đến màn hình chính khi đăng nhập thành công
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => OnBoardingScreen()),
+        );
+      }
+    } catch (e) {
+      // Xử lý lỗi đăng nhập
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Đăng nhập thất bại'),
+          content: const Text("Sai tên đăng nhập hoặc mật khẩu"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,10 +65,10 @@ class _LoginPageState extends State<LoginPage> {
                 child: Container(
                     width: 70,
                     height: 70,
-                    padding: EdgeInsets.all(15),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.all(15),
+                    decoration: const BoxDecoration(
                         shape: BoxShape.circle, color: Color(0xffd8d8d8)),
-                    child: FlutterLogo()
+                    child: const FlutterLogo()
                 ),
               ),
 
@@ -56,11 +86,12 @@ class _LoginPageState extends State<LoginPage> {
                 'Login to continue using FitnessPro',
                 style: TextStyle(fontSize: 16, color: Color(0xff606470)),
               ),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(0, 30, 0, 20),
+               Padding(
+                padding: const EdgeInsets.fromLTRB(0, 30, 0, 20),
                 child: TextField(
-                  style: TextStyle(fontSize: 18, color: Colors.black),
-                  decoration: InputDecoration(
+                  controller: _emailController,
+                  style: const TextStyle(fontSize: 18, color: Colors.black),
+                  decoration: const InputDecoration(
                       labelText: 'Email',
 
                       // prefixIcon: Container(
@@ -77,13 +108,14 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              const TextField(
-                style: TextStyle(
+               TextField(
+                controller: _passwordController,
+                style: const TextStyle(
                     fontSize: 18,
                     color: Colors.black
                 ),
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: 'Password',
 
                     // prefixIcon: Container(
@@ -112,14 +144,14 @@ class _LoginPageState extends State<LoginPage> {
                   width: double.infinity,
                   height: 52,
                   child: MaterialButton(
-                    onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => OnBoardingScreen()));},
-                    child: const Text(
-                      'Log In',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
+                    onPressed: () { _login();},
                     color: const Color(0xff50d832),
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(6))
+                    ),
+                    child: const Text(
+                      'Log In',
+                      style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
                 ),
@@ -134,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                           TextSpan(
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()));
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RegisterPage()));
                                 },
                               text: 'Sign up for a new account',
                               style: const TextStyle(
