@@ -123,7 +123,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     currentIndex += 1;
                     if(currentIndex == 6){
                       Navigator.pushReplacement(
-                        context, MaterialPageRoute(builder: (context) => LoginPage()));
+                        context, MaterialPageRoute(builder: (context) =>Menu()));
                     }
                     // if(Pages.last == const IntroPage7()){
                       // Navigator.pushReplacement(

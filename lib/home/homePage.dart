@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   late Stream<PedestrianStatus> _pedestrianStatusStream;
   String _status = '?', _steps = '0';
   late DateTime _lastUpdate;
-  final int _stepGoal = 4000;
+  final int _stepGoal = 6000;
   int _stepCount = 0;
 
   double calories = 0;

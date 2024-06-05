@@ -92,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: double.infinity,
                   height: 52,
                   child: MaterialButton(
-                    onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => Menu()));},
+                    onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => OnBoardingScreen()));},
                     child: const Text(
                       'Log In',
                       style: TextStyle(fontSize: 18, color: Colors.white),

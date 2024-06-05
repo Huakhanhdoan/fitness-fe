@@ -1,7 +1,16 @@
+// ignore_for_file: unnecessary_const
+
+import 'dart:ffi';
+
+import 'package:fitness/bottomSheet/bootomSheetCalo.dart';
+import 'package:fitness/bottomSheet/bottomSheetDate.dart';
+import 'package:fitness/bottomSheet/bottomSheetGender.dart';
+import 'package:fitness/bottomSheet/bottomSheetHeight.dart';
+import 'package:fitness/bottomSheet/bottomSheetRemind.dart';
+import 'package:fitness/bottomSheet/bottomSheetStep.dart';
+import 'package:fitness/bottomSheet/bottomSheetWeight.dart';
 import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:numberpicker/numberpicker.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -11,8 +20,11 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  int _currentIntValue = 1500;
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Center(
       child: ListView(children: <Widget>[
         const SizedBox(
@@ -137,11 +149,19 @@ class _ProfileState extends State<Profile> {
     return GestureDetector(
       onTap: () {
         if (value == "gender") {
-          _displayBottomSheetGender(context);
+          _openBottomSheetGender(context);
         } else if (value == "weight") {
-          _displayBottomSheetWeight(context);
+          _openBottomSheetWeight(context);
         } else if (value == "height") {
-          _displayBottomSheetHeight(context);
+          _openBottomSheetHeight(context);
+        } else if (value == "date") {
+          _openBottomSheetDate(context);
+        } else if (value == "step") {
+          _openBottomSheetStep(context);
+        } else if(value == "alarm"){
+          _openBottomSheetRemind(context);
+        } else if(value == "calo"){
+          _openBottomSheetCalo(context);
         }
       },
       child: Padding(
@@ -177,122 +197,39 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
-
-  Future _displayBottomSheetGender(BuildContext context) {
-    return showModalBottomSheet(
-      context: context,
-      builder: (context) => Container(
-        height: 400,
-        width: 500,
-        child: const Column(
-          children: [
-            SizedBox(
-              height: 30,
-            ),
-            Text(
-              'GIỚI TÍNH CỦA BẠN LÀ GÌ?',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-          ],
-        ),
-      ),
-    );
+  void _openBottomSheetCalo(BuildContext context){
+    showModalBottomSheet(context: context, builder: (_){
+      return const BottomSheetCalo();
+    },);
   }
-
-  Future _displayBottomSheetWeight(BuildContext context) {
-    int userWeight = 50;
-    return showModalBottomSheet(
-      context: context,
-      builder: (context) => Container(
-        height: 400,
-        width: 500,
-        child: Column(
-          children: [
-            SizedBox(
-              height: 30,
-            ),
-            const Text(
-              'BẠN NẶNG BAO NHIÊU?',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Slider(
-                  value: userWeight.toDouble(),
-                  min: 0,
-                  max: 200,
-                  divisions: 200, // Số bước giữa min và max
-                  onChanged: (value) {
-                    //  saveValues();
-                    setState(() {
-                      userWeight = value.round();
-                    });
-                  },
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Center(
-                  child: Text(
-                    'Cân nặng của bạn: $userWeight' 'kg',
-                    style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green),
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+  void _openBottomSheetRemind(BuildContext context){
+    showModalBottomSheet(context: context, builder: (_){
+      return const BottomSheetRemind();
+    },);
   }
-
-  Future _displayBottomSheetHeight(BuildContext context) {
-    int _currentIntValue = 170;
-    return showModalBottomSheet(
-      context: context,
-      builder: (context) => Container(
-        height: 400,
-        width: 500,
-        child: const Column(
-          children: [
-            SizedBox(
-              height: 30,
-            ),
-            Text(
-              'BẠN CAO BAO NHIÊU?',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-          ],
-        ),
-      ),
-    );
+  void _openBottomSheetStep(BuildContext context){
+    showModalBottomSheet(context: context, builder: (_){
+      return const BottomSheetStep();
+    },);
+  }
+  void _openBottomSheetGender(BuildContext context){
+    showModalBottomSheet(context: context, builder: (_){
+      return const BottomSheetGender();
+    },);
+  }
+  void _openBottomSheetWeight(BuildContext context){
+    showModalBottomSheet(context: context, builder: (_){
+      return const BottomSheetWeight();
+    },);
+  }
+  void _openBottomSheetHeight(BuildContext context){
+    showModalBottomSheet(context: context, builder: (_){
+      return const BottomSheetHeight();
+    },);
+  }
+  void _openBottomSheetDate(BuildContext context){
+    showModalBottomSheet(context: context, builder: (_){
+      return const BottomSheetDate();
+    },);
   }
 }

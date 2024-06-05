@@ -1,3 +1,4 @@
+import 'package:fitness/onboarding/onboarding_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../components/menu.dart';
@@ -160,7 +161,7 @@ class _RegisterPageState extends State<RegisterPage> {
   _onSignUpClicked() {
 
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Menu()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => OnBoardingScreen()));
 
   }
 }

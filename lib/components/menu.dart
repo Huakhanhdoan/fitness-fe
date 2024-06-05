@@ -81,6 +81,7 @@ if(widget.index!=null) {
                   ),
                   const Spacer(),
                   CurvedNavigationBar(
+                    index: _index,
                     color: AppColors.colorTheme,
                     backgroundColor: Colors.transparent,
                     items: const [
