@@ -7,14 +7,16 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-int? isViewed;
+ String isLogin = "";
+
 void main() async {
   // SystemChrome.setSystemUIOverlayStyle(
   //   SystemUiOverlayStyle(statusBarColor: Colors.transparent)
   // );
-  // WidgetsFlutterBinding.ensureInitialized();
-  // SharedPreferences prefs = await SharedPreferences.getInstance();
-  // isViewed = prefs.getInt('onBoard');
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  isLogin = prefs.getString('id') ?? "";
+
   runApp(const MyApp());
 }
 
@@ -31,7 +33,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
 
-      home:   OnBoardingScreen(),
+      home:  (isLogin.isNotEmpty) ? const Menu() : LoginPage(),
 
       debugShowCheckedModeBanner: false,
     );

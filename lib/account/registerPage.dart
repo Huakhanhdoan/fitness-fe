@@ -27,8 +27,6 @@ class _RegisterPageState extends State<RegisterPage> {
         _locationController.text,
       );
       if (token != null) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('id', token);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => OnBoardingScreen()),
@@ -38,12 +36,12 @@ class _RegisterPageState extends State<RegisterPage> {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: Text('Registration Failed'),
+          title: const Text('Registration Failed'),
           content: Text(e.toString()),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(),
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         ),

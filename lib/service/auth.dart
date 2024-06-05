@@ -1,6 +1,8 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 Future<String?> login(String email, String password) async {
   final url = Uri.parse('https://fitness-be.onrender.com/auth/login');
 
@@ -18,8 +20,9 @@ Future<String?> login(String email, String password) async {
   if (response.statusCode == 200) {
     // Đăng nhập thành công, trả về token
     final responseData = jsonDecode(response.body);
-    print(responseData);
-    print(responseData['user']['_id']);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('id',responseData['user']['_id'] ) ;
+
     return responseData['token'];
 
   } else {
@@ -45,7 +48,10 @@ Future<String?> register(String name, String email, String password, String phon
   );
 
   if (response.statusCode == 200) {
+
     final responseData = jsonDecode(response.body);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('id',responseData['user']['_id'] ) ;
     return responseData['token'];
   } else {
     throw Exception('Failed to register');

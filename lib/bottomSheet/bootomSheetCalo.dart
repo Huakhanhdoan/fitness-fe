@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../components/menu.dart';
 
 class BottomSheetCalo extends StatefulWidget {
   const BottomSheetCalo({super.key});
@@ -10,6 +13,18 @@ class BottomSheetCalo extends StatefulWidget {
 
 class _BottomSheetStepState extends State<BottomSheetCalo> {
   int currentIntValue = 500;
+  Future<void> getData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      currentIntValue =   prefs.getInt('userCalo') ?? 0;
+    });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -55,7 +70,7 @@ class _BottomSheetStepState extends State<BottomSheetCalo> {
                       NumberPicker(
                         itemCount: 3,
                         value: currentIntValue,
-                        minValue: 100,
+                        minValue: 0,
                         maxValue: 2000,
                         step: 100,
                         haptics: true,
@@ -69,7 +84,11 @@ class _BottomSheetStepState extends State<BottomSheetCalo> {
                             fontSize: 26),
                         textStyle:
                             const TextStyle(color: Colors.green, fontSize: 20),
-                        onChanged: (int value) {
+                        onChanged: (int value) async {
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          setState(() {
+                            prefs.setInt('userCalo', value);
+                          });
                           setState(() {
                             currentIntValue = value;
                           });
@@ -112,6 +131,8 @@ class _BottomSheetStepState extends State<BottomSheetCalo> {
                 ),
                 onTap: () {
                   Navigator.pop(context);
+                  Navigator.pushReplacement(context, MaterialPageRoute(
+                      builder: (context) => const Menu(index: 2)));
                 },
               ),
             ),

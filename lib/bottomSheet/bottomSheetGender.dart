@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../components/menu.dart';
 class BottomSheetGender extends StatefulWidget {
   const BottomSheetGender({super.key});
 
@@ -47,6 +50,8 @@ class _BottomSheetGenderState extends State<BottomSheetGender> {
               GestureDetector(
                 onTap:() {
               Navigator.pop(context);
+              Navigator.pushReplacement(context, MaterialPageRoute(
+                  builder: (context) => const Menu(index: 2)));
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(left: 100, right: 100),
@@ -79,10 +84,16 @@ class _BottomSheetGenderState extends State<BottomSheetGender> {
     return   Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap: () {
+
+        onTap: () async {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
           setState(() {
             userGender = userGender == name ? "" : name;
+
           });
+          prefs.setString('userGender', userGender);
+
+
         },
         child: Container(
           height: 70,
