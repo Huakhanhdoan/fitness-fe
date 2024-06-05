@@ -1,3 +1,4 @@
+import 'package:fitness/helps/help_screen.dart';
 import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,7 +18,7 @@ class _SettingState extends State<Setting> {
   double step = 2210;
   double distance = 2.12;
   bool isWater = true;
-  bool isDarkMode = false;
+ late bool isDarkMode ;
   @override
   void initState() {
     super.initState();
@@ -126,13 +127,13 @@ class _SettingState extends State<Setting> {
                 height: 1,
                 color: Colors.grey,
               ),
-              getOptions(Icons.history, "Lịch sử", ),
+              getOptions(Icons.history, "Lịch sử", "history"),
               Container(
                 width: MediaQuery.of(context).size.width - 40,
                 height: 1,
                 color: Colors.grey,
               ),
-              getOptions(Icons.school_sharp, "Thành tích"),
+              getOptions(Icons.school_sharp, "Thành tích", "achivement"),
             ]),
 
           ),
@@ -162,7 +163,7 @@ class _SettingState extends State<Setting> {
             ),
             child: Column(
               children: [
-                getOptions(Icons.g_mobiledata, 'Phục hồi dữ liệu đã sao lưu'),
+                getOptions(Icons.g_mobiledata, 'Phục hồi dữ liệu đã sao lưu', "resolve"),
                 Container(
                   width: MediaQuery.of(context).size.width - 40,
                   height: 1,
@@ -277,31 +278,31 @@ class _SettingState extends State<Setting> {
             ),
             child: Column(
               children: [
-                getOptions(Icons.mobile_friendly, 'Thiết lập thiết bị'),
+                getOptions(Icons.mobile_friendly, 'Thiết lập thiết bị', "setup_mobile"),
                 Container(
                   width: MediaQuery.of(context).size.width - 40,
                   height: 1,
                   color: Colors.grey,
                 ),
-                getOptions(Icons.help, 'Hướng dẫn'),
+                getOptions(Icons.help, 'Hướng dẫn', "help"),
                 Container(
                   width: MediaQuery.of(context).size.width - 40,
                   height: 1,
                   color: Colors.grey,
                 ),
-                getOptions(Icons.message, 'Nhận xét'),
+                getOptions(Icons.message, 'Nhận xét', "message"),
                 Container(
                   width: MediaQuery.of(context).size.width - 40,
                   height: 1,
                   color: Colors.grey,
                 ),
-                getOptions(Icons.lock_clock_rounded, 'Chính sách bảo mật'),
+                getOptions(Icons.lock_clock_rounded, 'Chính sách bảo mật', "lock"),
                 Container(
                   width: MediaQuery.of(context).size.width - 40,
                   height: 1,
                   color: Colors.grey,
                 ),
-                getOptions(Icons.error, 'Giới thiệu'),
+                getOptions(Icons.error, 'Giới thiệu', "present"),
                 ]
             )
           ), const SizedBox(height: 100,)
@@ -310,9 +311,13 @@ class _SettingState extends State<Setting> {
     );
   }
 
-  Widget getOptions(IconData _icon, String _nameCard) {
+  Widget getOptions(IconData _icon, String _nameCard, String tag) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        if(tag == "help"){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => HelpScreen()));
+        }
+      },
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SizedBox(

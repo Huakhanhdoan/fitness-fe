@@ -5,19 +5,19 @@ class BottomSheetGender extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height * 0.45,
       width: MediaQuery.of(context).size.width,
       child: Column(
         children: [
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height * 0.3,
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                   child: Container(
-                    child: Column(
+                    child: const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -33,29 +33,30 @@ class BottomSheetGender extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
+                SizedBox(
                   height: MediaQuery.of(context).size.height * 0.2,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 50, right: 50),
                     child: Column(
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: ListTile(
-                            leading: Icon(Icons.male),
-                            title: Text("Nam"),
-                            trailing: Icon(Icons.arrow_drop_down),
+                            leading: const Icon(Icons.male),
+                            //update gender here
+                            title: const Text("Nam"),
+                            trailing: const Icon(Icons.arrow_drop_down),
                             onTap: () {
                               Navigator.pop(context);
                             },
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: ListTile(
-                            leading: Icon(Icons.female),
-                            title: Text("Nu"),
-                            trailing: Icon(Icons.arrow_drop_down),
+                            leading: const Icon(Icons.female),
+                            title: const Text("Nữ"),
+                            trailing: const Icon(Icons.arrow_drop_down),
                             onTap: () {
                               Navigator.pop(context);
                             },
@@ -71,17 +72,17 @@ class BottomSheetGender extends StatelessWidget {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.03,
           ),
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height * 0.07,
             child: Padding(
-              padding: EdgeInsets.only(left: 100, right: 100),
+              padding: const EdgeInsets.only(left: 100, right: 100),
               child: InkWell(
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                    borderRadius: const BorderRadius.all(Radius.circular(50)),
                     color: Colors.green.shade300,
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       "Xong",
                       style: TextStyle(
