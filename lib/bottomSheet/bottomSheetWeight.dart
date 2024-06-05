@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../components/menu.dart';
 class BottomSheetWeight extends StatefulWidget {
   const BottomSheetWeight({super.key});
 
@@ -9,6 +12,19 @@ class BottomSheetWeight extends StatefulWidget {
 class _BottomSheetWeightState extends State<BottomSheetWeight> {
 
   int userWeight = 50;
+  Future<void> getData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+    userWeight =  prefs.getInt('userWeight') ?? 50;
+    });
+
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -51,7 +67,11 @@ class _BottomSheetWeightState extends State<BottomSheetWeight> {
                             max: 200,
                             label: '$userWeight',
                             divisions: 200, // Số bước giữa min và max
-                            onChanged: (value) {
+                            onChanged: (value) async {
+                              SharedPreferences prefs = await SharedPreferences.getInstance();
+                              setState(() {
+                                prefs.setInt('userWeight', value.round());
+                              });
                               setState(() {
                                 userWeight = value.round();
                               });
@@ -99,6 +119,8 @@ class _BottomSheetWeightState extends State<BottomSheetWeight> {
                 ),
                 onTap: () {
                   Navigator.pop(context);
+                  Navigator.pushReplacement(context, MaterialPageRoute(
+                      builder: (context) => const Menu(index: 2)));
                 },
               ),
             ),

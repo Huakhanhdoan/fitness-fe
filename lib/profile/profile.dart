@@ -25,24 +25,28 @@ class _ProfileState extends State<Profile> {
    String userGender = "";
    int userWeight = 0;
    int userHeight = 0;
-   int userTarget = 4000;
+   int userTarget = 1500;
    String userDate = "";
+   int userCalo = 0;
 
  @override
   void initState() {
 
     // TODO: implement initState
     super.initState();
+    
     loadData();
   }
   void loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       userGender =  prefs.getString('userGender') ?? "";
-
-      userWeight = prefs.getInt('userWeight') ?? 0;
-      userTarget = prefs.getInt('userTarget')  ?? 4000;
-      userDate = prefs.getString('userDate')  ?? "";
+      userWeight = prefs.getInt('userWeight') ?? 50;
+      userHeight = prefs.getInt('userHeight') ?? 170;
+      userTarget = prefs.getInt('userTarget')  ?? 1500;
+      userCalo = prefs.getInt('userCalo')  ?? 0;
+      userDate = prefs.getString('userDate')  ?? "2020-12-12";
+     userDate =  userDate.substring(0, 10);
     });
 
   }
@@ -159,7 +163,7 @@ class _ProfileState extends State<Profile> {
                 color: Colors.grey,
               ),
               getOptions(Icons.local_fire_department_rounded, "Calories",
-                  "500Kcal", "calo"),
+                ('$userCalo'"Kcal"), "calo"),
             ]),
           ),
         ),
@@ -178,7 +182,8 @@ class _ProfileState extends State<Profile> {
   ) {
     return GestureDetector(
 
-      onTap: () async {
+      onTap: ()  {
+
         if(_nameCard == "Nhịp tim") {
           Navigator.push(
             context,
@@ -187,8 +192,7 @@ class _ProfileState extends State<Profile> {
           );
         }
         if (value == "gender") {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          print(prefs.getString('userGender'));
+          
           _openBottomSheetGender(context);
         } else if (value == "weight") {
           _openBottomSheetWeight(context);

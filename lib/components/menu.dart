@@ -8,6 +8,7 @@ import 'package:fitness/profile/profile.dart';
 import 'package:fitness/setting/setting.dart';
 import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Menu extends StatefulWidget {
   final int? index;
@@ -21,7 +22,7 @@ class _MenuState extends State<Menu> {
   var map =  MyMap();
   var home = const HomePage();
   var history = const History();
-  var profile = const Profile();
+  var profile =  Profile();
   var setting = const Setting();
   int _index = 0;
   String title = "HOME";
@@ -91,7 +92,9 @@ class _MenuState extends State<Menu> {
                           fontSize: 15),
                     ),
                     IconButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          prefs.setInt('id',0 ) ;
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
                         },
                         icon: const Icon(
