@@ -47,29 +47,6 @@ class _IntroPage4 extends State<IntroPage4> {
                 const SizedBox(
                   height: 15,
                 ),
-                // CupertinoPageScaffold(
-                //   child: Center(
-                //     child: Column(
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //       children: [
-                //         SizedBox(
-                //           height: 220,
-                //           child: CupertinoDatePicker(
-                //             use24hFormat: true,
-                //             backgroundColor: Colors.white,
-                //             initialDateTime: dateTime,
-                //             mode: CupertinoDatePickerMode.date,
-                //             onDateTimeChanged: (dateTime) {
-                //               setState(() {
-                //                 this.dateTime = dateTime;
-                //               });
-                //             },
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
                 DaysPicker(
                   minDate: DateTime(2021, 1, 1),
                   maxDate: DateTime(2023, 12, 31),
