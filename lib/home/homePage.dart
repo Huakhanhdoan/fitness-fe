@@ -214,7 +214,8 @@ class _HomePageState extends State<HomePage> {
   Widget getOptions(
       IconData _icon, String _nameCard, String _unit, double value) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+      },
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Container(

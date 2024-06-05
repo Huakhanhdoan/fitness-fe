@@ -12,6 +12,7 @@ import 'package:fitness/bottomSheet/bottomSheetStep.dart';
 import 'package:fitness/bottomSheet/bottomSheetWeight.dart';
 import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -21,11 +22,33 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  int _currentIntValue = 1500;
+   String userGender = "";
+   int userWeight = 0;
+   int userHeight = 0;
+   int userTarget = 4000;
+   String userDate = "";
+
+ @override
+  void initState() {
+
+    // TODO: implement initState
+    super.initState();
+    loadData();
+  }
+  void loadData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userGender =  prefs.getString('userGender') ?? "";
+
+      userWeight = prefs.getInt('userWeight') ?? 0;
+      userTarget = prefs.getInt('userTarget')  ?? 4000;
+      userDate = prefs.getString('userDate')  ?? "";
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+
     return Center(
       child: ListView(children: <Widget>[
         const SizedBox(
@@ -61,7 +84,7 @@ class _ProfileState extends State<Profile> {
               getOptions(
                 Icons.male,
                 "Giới tính",
-                "Nam",
+                userGender,
                 "gender",
               ),
               Container(
@@ -69,19 +92,19 @@ class _ProfileState extends State<Profile> {
                 height: 1,
                 color: Colors.grey,
               ),
-              getOptions(Icons.monitor_weight, "Khối lượng", "75kg", "weight"),
+              getOptions(Icons.monitor_weight, "Khối lượng", "${userWeight}kg", "weight"),
               Container(
                 width: MediaQuery.of(context).size.width - 40,
                 height: 1,
                 color: Colors.grey,
               ),
-              getOptions(Icons.expand_outlined, "Chiều cao", "170cm", "height"),
+              getOptions(Icons.expand_outlined, "Chiều cao", "${userHeight}cm", "height"),
               Container(
                 width: MediaQuery.of(context).size.width - 40,
                 height: 1,
                 color: Colors.grey,
               ),
-              getOptions(Icons.cake, "Ngày sinh", "16/01/2003", "date"),
+              getOptions(Icons.cake, "Ngày sinh", userDate, "date"),
               Container(
                 width: MediaQuery.of(context).size.width - 40,
                 height: 1,
@@ -123,7 +146,7 @@ class _ProfileState extends State<Profile> {
               borderRadius: BorderRadius.circular(20.0),
             ),
             child: Column(children: [
-              getOptions(Icons.my_location_outlined, "Số bước", "4000", "step"),
+              getOptions(Icons.my_location_outlined, "Số bước", userTarget.toString(), "step"),
               Container(
                 width: MediaQuery.of(context).size.width - 40,
                 height: 1,
@@ -155,7 +178,7 @@ class _ProfileState extends State<Profile> {
   ) {
     return GestureDetector(
 
-      onTap: () {
+      onTap: () async {
         if(_nameCard == "Nhịp tim") {
           Navigator.push(
             context,
@@ -164,6 +187,8 @@ class _ProfileState extends State<Profile> {
           );
         }
         if (value == "gender") {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          print(prefs.getString('userGender'));
           _openBottomSheetGender(context);
         } else if (value == "weight") {
           _openBottomSheetWeight(context);

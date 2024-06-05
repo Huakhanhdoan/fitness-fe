@@ -38,12 +38,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   }
 
   var Pages = [
-    IntroPage1(),
-    IntroPage2(),
-    IntroPage3(),
-    IntroPage4(),
-    IntroPage6(),
-    IntroPage7(),
+    const IntroPage1(),
+    const IntroPage2(),
+    const IntroPage3(),
+    const IntroPage4(),
+    const IntroPage6(),
+    const IntroPage7(),
   ];
 
   @override
@@ -108,7 +108,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 SmoothPageIndicator(
                   controller: _controller, 
                   count: 6,
-                  effect: SlideEffect(
+                  effect: const SlideEffect(
                     dotColor: Colors.grey,
                     activeDotColor: Colors.red,
                   ),
@@ -117,13 +117,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   onTap: () async {
                     // await _storeOnBoardInfo();
                     _controller.nextPage(
-                      duration: Duration(microseconds: 15000),
+                      duration: const Duration(microseconds: 15000),
                       curve: Curves.bounceIn,
                     );
                     currentIndex += 1;
                     if(currentIndex == 6){
                       Navigator.pushReplacement(
-                        context, MaterialPageRoute(builder: (context) =>Menu()));
+                        context, MaterialPageRoute(builder: (context) =>const Menu()));
                     }
                     // if(Pages.last == const IntroPage7()){
                       // Navigator.pushReplacement(
