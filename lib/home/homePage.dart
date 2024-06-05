@@ -1,3 +1,4 @@
+import 'package:fitness/chatbot/pages/chat_screen.dart';
 import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:pedometer/pedometer.dart';
@@ -214,7 +215,14 @@ class _HomePageState extends State<HomePage> {
   Widget getOptions(
       IconData _icon, String _nameCard, String _unit, double value) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ChatScreen(),
+          ),
+        );
+      },
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Container(
