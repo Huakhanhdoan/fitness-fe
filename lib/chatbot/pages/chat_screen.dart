@@ -1,6 +1,5 @@
 import 'package:fitness/home/homePage.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
@@ -21,7 +20,7 @@ class _ChatScreenState extends State<ChatScreen> {
   TextEditingController _userMessage = TextEditingController();
   bool isLoading = false;
 
-  static const apiKey = "AIzaSyCFS3fhbqbtdnKT0SpVDm3SimGz1Srdy4M";
+  static const apiKey = "AIzaSyAcyBQw9AVgeeIIVe99npntalN9MHBvxnQ";
 
   final List<Message> _messages = [];
 
@@ -71,7 +70,7 @@ class _ChatScreenState extends State<ChatScreen> {
           },
         ),
         title:
-        Text('Fitness Bot', style: GoogleFonts.poppins(color: black, fontWeight: FontWeight.bold)),
+        Text('Fitness Bot', style: TextStyle(color: black, fontWeight: FontWeight.bold)),
         centerTitle: true,
       ),
       body: Column(
