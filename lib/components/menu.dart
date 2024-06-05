@@ -1,5 +1,6 @@
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
+import 'package:fitness/account/loginPage.dart';
 import 'package:fitness/history/history.dart';
 import 'package:fitness/home/homePage.dart';
 import 'package:fitness/map/my_map.dart';
@@ -18,6 +19,10 @@ class Menu extends StatefulWidget {
 
 class _MenuState extends State<Menu> {
   var map =  MyMap();
+  var home = const HomePage();
+  var history = const History();
+  var profile = const Profile();
+  var setting = const Setting();
   int _index = 0;
   String title = "HOME";
 
@@ -55,13 +60,13 @@ class _MenuState extends State<Menu> {
         Container(
             color: AppColors.backgroundColor,
             child: (_index == 0)
-                ? const HomePage()
+                ? home
                 : (_index == 2)
-                    ? const Profile()
+                    ? profile
                     : (_index == 1)
-                        ? const History()
+                        ? history
                         : (_index == 3)
-                            ? const Setting()
+                            ? setting
                             :  map),
         Column(
           children: [
@@ -86,9 +91,11 @@ class _MenuState extends State<Menu> {
                           fontSize: 15),
                     ),
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                        },
                         icon: const Icon(
-                          Icons.person_pin,
+                          Icons.logout,
                           color: Colors.white,
                           size: 40,
                         ))
