@@ -97,7 +97,7 @@ class _MenuState extends State<Menu> {
                         icon: const Icon(
                           Icons.logout,
                           color: Colors.white,
-                          size: 40,
+                          size: 25,
                         ))
                   ],
                 ),
