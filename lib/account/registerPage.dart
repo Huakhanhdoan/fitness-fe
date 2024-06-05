@@ -28,7 +28,7 @@ class _RegisterPageState extends State<RegisterPage> {
       );
       if (token != null) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('tokenRegister', token);
+        await prefs.setString('id', token);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => OnBoardingScreen()),

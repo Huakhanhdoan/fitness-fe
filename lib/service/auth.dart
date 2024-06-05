@@ -18,7 +18,10 @@ Future<String?> login(String email, String password) async {
   if (response.statusCode == 200) {
     // Đăng nhập thành công, trả về token
     final responseData = jsonDecode(response.body);
+    print(responseData);
+    print(responseData['user']['_id']);
     return responseData['token'];
+
   } else {
     // Đăng nhập thất bại
     throw Exception('Failed to login');
