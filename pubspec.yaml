@@ -60,8 +60,7 @@ dependencies:
   flutter_markdown: ^0.6.20
   another_stepper: ^1.2.2
 
-
-
+  image_picker: ^0.8.7+4
 
 dev_dependencies:
   flutter_test:

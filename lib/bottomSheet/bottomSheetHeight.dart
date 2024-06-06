@@ -127,7 +127,7 @@ class _BottomSheetHeightState extends State<BottomSheetHeight> {
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.pushReplacement(context, MaterialPageRoute(
-                      builder: (context) => const Menu(index: 2)));
+                      builder: (context) => const Menu(index: 4)));
                 },
               ),
             ),

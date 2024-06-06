@@ -223,7 +223,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
-              child: Image.asset("assets/images/chatbot.gif", width: 120,height: 120,),
+              child: Image.asset("assets/images/chatbot.gif", width: 100,height: 100,),
 
             ))
     ]

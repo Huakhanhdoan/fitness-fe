@@ -51,7 +51,7 @@ class _BottomSheetGenderState extends State<BottomSheetGender> {
                 onTap:() {
               Navigator.pop(context);
               Navigator.pushReplacement(context, MaterialPageRoute(
-                  builder: (context) => const Menu(index: 2)));
+                  builder: (context) => const Menu(index: 4)));
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(left: 100, right: 100),

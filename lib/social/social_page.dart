@@ -1,6 +1,7 @@
 import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
 import '../components/menu.dart';
+import 'new_status.dart';
 
 
 class Social extends StatefulWidget {
@@ -108,7 +109,49 @@ class _SocialState extends State<Social> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 70),
+            const SizedBox(height: 100),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    icon: const Icon(
+                      Icons.search,
+                      size: 30,
+                      color: Color(0xff262626),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Menu(),
+                        ),
+                      );
+                    },
+                  ),
+                  const Image(
+                    image: AssetImage('assets/images/logo_social.jpg'),
+                    height: 50,
+                    width: 50,
+                  ),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.add_box,
+                      size: 30,
+                      color: Color(0xff262626),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Status(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
             // SizedBox(
             //   height: 100,
             //   child: ListView.builder(
@@ -209,13 +252,13 @@ class _SocialState extends State<Social> {
                   ),
                   SizedBox(width: 20),
                   Icon(
-                    Icons.comment,
+                    Icons.messenger_outline,
                     size: 25,
                     color: Color(0xff262626),
                   ),
                   SizedBox(width: 20),
                   Icon(
-                    Icons.send,
+                    Icons.share_outlined,
                     size: 25,
                     color: Color(0xff262626),
                   ),
@@ -266,7 +309,7 @@ class _SocialState extends State<Social> {
                       color: Color(0xff262626),
                     ),
                   ),
-                  SizedBox(height: 6),
+                  SizedBox(height: 10),
                 ],
               ),
             ),
@@ -313,13 +356,13 @@ class _SocialState extends State<Social> {
                   ),
                   SizedBox(width: 20),
                   Icon(
-                    Icons.comment,
+                    Icons.messenger_outline,
                     size: 25,
                     color: Color(0xff262626),
                   ),
                   SizedBox(width: 20),
                   Icon(
-                    Icons.send,
+                    Icons.share_outlined,
                     size: 25,
                     color: Color(0xff262626),
                   ),

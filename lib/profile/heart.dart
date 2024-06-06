@@ -128,7 +128,7 @@ class _HeartState extends State<Heart> {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => const Menu(index: 2,)),
+                    MaterialPageRoute(builder: (context) => const Menu(index: 4,)),
                   );
                 },
                 icon: const Icon(Icons.save),

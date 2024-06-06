@@ -2,6 +2,7 @@ import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../account/loginPage.dart';
 import '../components/menu.dart';
 
 class Setting extends StatefulWidget {
@@ -39,6 +40,19 @@ class _SettingState extends State<Setting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) =>
+                      Menu(),
+                  )
+              );
+            },
+          ),
+        ),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
@@ -193,7 +207,7 @@ class _SettingState extends State<Setting> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(builder: (context) =>
-                                    Menu(index:3)
+                                    Setting(),
                                 )
                             );
                             // This is called when the user toggles the switch.
@@ -309,13 +323,45 @@ class _SettingState extends State<Setting> {
                           height: 1,
                           color: Colors.grey,
                         ),
-                        getOptions(Icons.logout_outlined, 'Đăng xuất'),
+                        getOptionsLogout(Icons.logout_outlined, 'Đăng xuất'),
                       ]
                   )
               ), const SizedBox(height: 100,)
             ]),
           ),
         )
+    );
+  }
+
+  Widget getOptionsLogout(IconData _icon, String _nameCard) {
+    return GestureDetector(
+      onTap: () async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setInt('id',0 ) ;
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SizedBox(
+          height: 35,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Icon(
+                _icon,
+                size: 40,
+                color: Colors.blue,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(_nameCard, style: TextStyle(color: AppColors.textColor)),
+              ),
+              const Spacer(),
+              const Icon(Icons.keyboard_arrow_right_sharp),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
