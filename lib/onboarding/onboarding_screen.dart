@@ -1,4 +1,5 @@
 import 'package:fitness/account/loginPage.dart';
+import 'package:fitness/home/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -58,7 +59,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             onPressed: () async {
               await _storeOnBoardInfo();
               Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) =>  LoginPage()));
+                  context, MaterialPageRoute(builder: (context) =>  HomePage()));
             },
             child: const Text(
               'Skip',
