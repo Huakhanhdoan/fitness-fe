@@ -33,7 +33,8 @@ class HelpScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
+      body: ListView(
+        physics: BouncingScrollPhysics(),
         children: [
           Padding(
             padding: const EdgeInsets.only(
@@ -44,21 +45,20 @@ class HelpScreen extends StatelessWidget {
             ),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade500,
-                    offset: const Offset(1.2, 1.2),
-                    blurRadius: 5,
-                    spreadRadius: 0.5,
-                  ),
-                  const BoxShadow(
-                    color: Colors.white,
-                    offset: const Offset(-2.0, -2.0),
-                    spreadRadius: 0.5,
-                  ),
-                ]
-              ),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade500,
+                      offset: const Offset(1.2, 1.2),
+                      blurRadius: 5,
+                      spreadRadius: 0.5,
+                    ),
+                    const BoxShadow(
+                      color: Colors.white,
+                      offset: const Offset(-2.0, -2.0),
+                      spreadRadius: 0.5,
+                    ),
+                  ]),
               child: InkWell(
                 child: ListTile(
                   title: Text(
@@ -102,21 +102,20 @@ class HelpScreen extends StatelessWidget {
             ),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade500,
-                    offset: const Offset(1.2, 1.2),
-                    blurRadius: 5,
-                    spreadRadius: 0.5,
-                  ),
-                  const BoxShadow(
-                    color: Colors.white,
-                    offset: const Offset(-2.0, -2.0),
-                    spreadRadius: 0.5,
-                  ),
-                ]
-              ),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade500,
+                      offset: const Offset(1.2, 1.2),
+                      blurRadius: 5,
+                      spreadRadius: 0.5,
+                    ),
+                    const BoxShadow(
+                      color: Colors.white,
+                      offset: const Offset(-2.0, -2.0),
+                      spreadRadius: 0.5,
+                    ),
+                  ]),
               child: InkWell(
                 child: ListTile(
                   title: Text(
@@ -160,21 +159,20 @@ class HelpScreen extends StatelessWidget {
             ),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade500,
-                    offset: const Offset(1.2, 1.2),
-                    blurRadius: 5,
-                    spreadRadius: 0.5,
-                  ),
-                  const BoxShadow(
-                    color: Colors.white,
-                    offset: const Offset(-2.0, -2.0),
-                    spreadRadius: 0.5,
-                  ),
-                ]
-              ),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade500,
+                      offset: const Offset(1.2, 1.2),
+                      blurRadius: 5,
+                      spreadRadius: 0.5,
+                    ),
+                    const BoxShadow(
+                      color: Colors.white,
+                      offset: const Offset(-2.0, -2.0),
+                      spreadRadius: 0.5,
+                    ),
+                  ]),
               child: InkWell(
                 child: ListTile(
                   title: Text(
@@ -218,21 +216,20 @@ class HelpScreen extends StatelessWidget {
             ),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade500,
-                    offset: const Offset(1.2, 1.2),
-                    blurRadius: 5,
-                    spreadRadius: 0.5,
-                  ),
-                  const BoxShadow(
-                    color: Colors.white,
-                    offset: const Offset(-2.0, -2.0),
-                    spreadRadius: 0.5,
-                  ),
-                ]
-              ),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade500,
+                      offset: const Offset(1.2, 1.2),
+                      blurRadius: 5,
+                      spreadRadius: 0.5,
+                    ),
+                    const BoxShadow(
+                      color: Colors.white,
+                      offset: const Offset(-2.0, -2.0),
+                      spreadRadius: 0.5,
+                    ),
+                  ]),
               child: InkWell(
                 child: ListTile(
                   title: Text(
@@ -276,21 +273,20 @@ class HelpScreen extends StatelessWidget {
             ),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade500,
-                    offset: const Offset(1.2, 1.2),
-                    blurRadius: 5,
-                    spreadRadius: 0.5,
-                  ),
-                  const BoxShadow(
-                    color: Colors.white,
-                    offset: const Offset(-2.0, -2.0),
-                    spreadRadius: 0.5,
-                  ),
-                ]
-              ),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade500,
+                      offset: const Offset(1.2, 1.2),
+                      blurRadius: 5,
+                      spreadRadius: 0.5,
+                    ),
+                    const BoxShadow(
+                      color: Colors.white,
+                      offset: const Offset(-2.0, -2.0),
+                      spreadRadius: 0.5,
+                    ),
+                  ]),
               child: InkWell(
                 child: ListTile(
                   title: Text(
@@ -334,21 +330,20 @@ class HelpScreen extends StatelessWidget {
             ),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade500,
-                    offset: const Offset(1.2, 1.2),
-                    blurRadius: 5,
-                    spreadRadius: 0.5,
-                  ),
-                  const BoxShadow(
-                    color: Colors.white,
-                    offset: const Offset(-2.0, -2.0),
-                    spreadRadius: 0.5,
-                  ),
-                ]
-              ),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade500,
+                      offset: const Offset(1.2, 1.2),
+                      blurRadius: 5,
+                      spreadRadius: 0.5,
+                    ),
+                    const BoxShadow(
+                      color: Colors.white,
+                      offset: const Offset(-2.0, -2.0),
+                      spreadRadius: 0.5,
+                    ),
+                  ]),
               child: InkWell(
                 child: ListTile(
                   title: Text(
@@ -392,21 +387,20 @@ class HelpScreen extends StatelessWidget {
             ),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade500,
-                    offset: const Offset(1.2, 1.2),
-                    blurRadius: 5,
-                    spreadRadius: 0.5,
-                  ),
-                  const BoxShadow(
-                    color: Colors.white,
-                    offset: const Offset(-2.0, -2.0),
-                    spreadRadius: 0.5,
-                  ),
-                ]
-              ),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade500,
+                      offset: const Offset(1.2, 1.2),
+                      blurRadius: 5,
+                      spreadRadius: 0.5,
+                    ),
+                    const BoxShadow(
+                      color: Colors.white,
+                      offset: const Offset(-2.0, -2.0),
+                      spreadRadius: 0.5,
+                    ),
+                  ]),
               child: InkWell(
                 child: ListTile(
                   title: Text(
@@ -450,21 +444,20 @@ class HelpScreen extends StatelessWidget {
             ),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade500,
-                    offset: const Offset(1.2, 1.2),
-                    blurRadius: 5,
-                    spreadRadius: 0.5,
-                  ),
-                  const BoxShadow(
-                    color: Colors.white,
-                    offset: const Offset(-2.0, -2.0),
-                    spreadRadius: 0.5,
-                  ),
-                ]
-              ),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade500,
+                      offset: const Offset(1.2, 1.2),
+                      blurRadius: 5,
+                      spreadRadius: 0.5,
+                    ),
+                    const BoxShadow(
+                      color: Colors.white,
+                      offset: const Offset(-2.0, -2.0),
+                      spreadRadius: 0.5,
+                    ),
+                  ]),
               child: InkWell(
                 child: ListTile(
                   title: Text(

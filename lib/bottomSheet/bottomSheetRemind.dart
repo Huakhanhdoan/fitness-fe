@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 import 'package:time_picker_spinner/time_picker_spinner.dart';
-
-class BottomSheetRemind extends StatelessWidget {
+class BottomSheetRemind extends StatefulWidget {
   const BottomSheetRemind({super.key});
 
   @override
+  State<BottomSheetRemind> createState() => _BottomSheetRemindState();
+}
+DateTime dateTime = DateTime.now();
+class _BottomSheetRemindState extends State<BottomSheetRemind> {
+
+
+  @override
   Widget build(BuildContext context) {
-    int userHeight = 170;
-    DateTime dateTime = DateTime.now();
-    return Container(
+
+
+    return SizedBox(
       height: MediaQuery.of(context).size.height * 0.45,
       width: MediaQuery.of(context).size.width,
       child: Column(
         children: [
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height * 0.3,
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                   child: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -35,7 +41,7 @@ class BottomSheetRemind extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
+                SizedBox(
                   height: MediaQuery.of(context).size.height * 0.2,
                   child: TimePickerSpinner(
                     locale: const Locale('en', ''),
@@ -46,7 +52,7 @@ class BottomSheetRemind extends StatelessWidget {
                       fontSize: 24,
                     ),
                     highlightedTextStyle:
-                        const TextStyle(fontSize: 24, color: Colors.green),
+                        const TextStyle(fontSize: 26, color: Colors.green, fontWeight: FontWeight.bold),
                     isForce2Digits: true,
                     onTimeChange: (time) {
                       setState(() {
@@ -61,7 +67,7 @@ class BottomSheetRemind extends StatelessWidget {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.03,
           ),
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height * 0.07,
             child: Padding(
               padding: const EdgeInsets.only(left: 100, right: 100),
@@ -75,6 +81,7 @@ class BottomSheetRemind extends StatelessWidget {
                     child: Text(
                       "Xong",
                       style: TextStyle(
+                        fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
@@ -92,4 +99,4 @@ class BottomSheetRemind extends StatelessWidget {
   }
 }
 
-void setState(Null Function() param0) {}
+

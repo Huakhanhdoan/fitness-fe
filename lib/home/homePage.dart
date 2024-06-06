@@ -171,18 +171,18 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width / 3 - 4,
-                child: const Column(
+                child:  Column(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.timer,
                       size: 45,
                       color: Colors.blue,
                     ),
                     Text(
-                      '01h 20p',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      "${_stepCount~/60}"'p',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Text('Thời gian')
+                    const Text('Thời gian')
                   ],
                 ),
               ),
@@ -319,7 +319,7 @@ class _HomePageState extends State<HomePage> {
 
 
   void onStepCount(StepCount event) {
-    print(event);
+
     setState(() {
       _steps = event.steps.toString();
       _stepCount = int.parse(_steps);
@@ -327,22 +327,22 @@ class _HomePageState extends State<HomePage> {
   }
 
   void onPedestrianStatusChanged(PedestrianStatus event) {
-    print(event);
+
     setState(() {
       _status = event.status;
     });
   }
 
   void onPedestrianStatusError(error) {
-    print('onPedestrianStatusError: $error');
+
     setState(() {
       _status = 'Pedestrian Status not available';
     });
-    print(_status);
+
   }
 
   void onStepCountError(error) {
-    print('onStepCountError: $error');
+
     setState(() {
       _steps = 'Step Count not available';
     });

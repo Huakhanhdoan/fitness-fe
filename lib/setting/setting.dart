@@ -1,4 +1,5 @@
 import 'package:fitness/helps/help_screen.dart';
+import 'package:fitness/setting_device/setting_device.dart';
 import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,7 +19,8 @@ class _SettingState extends State<Setting> {
   double step = 2210;
   double distance = 2.12;
   bool isWater = true;
- late bool isDarkMode ;
+  late bool isDarkMode = false ;
+
   @override
   void initState() {
     super.initState();
@@ -278,7 +280,7 @@ class _SettingState extends State<Setting> {
             ),
             child: Column(
               children: [
-                getOptions(Icons.mobile_friendly, 'Thiết lập thiết bị', "setup_mobile"),
+                getOptions(Icons.mobile_friendly, 'Thiết lập thiết bị', "setting_device"),
                 Container(
                   width: MediaQuery.of(context).size.width - 40,
                   height: 1,
@@ -315,7 +317,10 @@ class _SettingState extends State<Setting> {
     return GestureDetector(
       onTap: () {
         if(tag == "help"){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => HelpScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const HelpScreen()));
+        }
+        if(tag == "setting_device"){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingDevice()));
         }
       },
       child: Padding(

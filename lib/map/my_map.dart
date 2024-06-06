@@ -1,12 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:location/location.dart' as loc;
 import 'package:open_route_service/open_route_service.dart';
 import 'package:latlong2/latlong.dart';
- import 'package:geocoding/geocoding.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 
 class MyMap extends StatefulWidget {
   @override
@@ -15,21 +16,20 @@ class MyMap extends StatefulWidget {
 
 class _MyMapState extends State<MyMap> {
   late final MapController _mapController;
-
-  final OpenRouteService _openRouteService =
-      OpenRouteService(apiKey: '5b3ce3597851110001cf62485eeed0fe8af24203b9469afcc93c3b34');
+  bool show_direction = false;
+  final OpenRouteService _openRouteService = OpenRouteService(
+      apiKey: '5b3ce3597851110001cf62485eeed0fe8af24203b9469afcc93c3b34');
 
   final TextEditingController _controller = TextEditingController();
   String _coordinates = "";
   LatLng _search = const LatLng(21.0278, 105.8311);
-  LatLng startPoint = LatLng(21.0278, 105.8311);
-  LatLng endPoint = LatLng(21.0278, 155.8311);
-  List<LatLng> points = [
+  LatLng startPoint = const LatLng(21.0278, 105.8311);
+  LatLng endPoint = const LatLng(21.0278, 155.8311);
+  List<LatLng> points = [];
 
-
-  ];
   Future<void> _getCurrentLocation() async {
-    final location = loc.Location() ;
+    // lấy vị trí hiện tại của người dùng
+    final location = loc.Location();
     final hasPermission = await location.hasPermission();
     if (hasPermission == PermissionStatus.denied) {
       final requestedPermission = await location.requestPermission();
@@ -40,32 +40,32 @@ class _MyMapState extends State<MyMap> {
 
     final currentLocation = await location.getLocation();
     setState(() {
-      startPoint = LatLng(currentLocation.latitude!, currentLocation.longitude!);
+      startPoint =
+          LatLng(currentLocation.latitude!, currentLocation.longitude!);
     });
-
-
- 
   }
+
   void findDirections() async {
+    // tìm đường đi từ startpoint đế endpoint
     points = [];
 
-_getCurrentLocation();
+    _getCurrentLocation();
     final directions = await _openRouteService.directionsRouteCoordsGet(
-     startCoordinate: ORSCoordinate(latitude: startPoint.latitude, longitude: startPoint.longitude),
-      endCoordinate: ORSCoordinate(latitude: endPoint.latitude, longitude: endPoint.longitude),
-      profileOverride:ORSProfile.footWalking
-    );
-    for(int i = 0; i< directions.length; i++) {
-
-  points.add(LatLng(directions[i].latitude, directions[i].longitude));
-
+        startCoordinate: ORSCoordinate(
+            latitude: startPoint.latitude, longitude: startPoint.longitude),
+        endCoordinate: ORSCoordinate(
+            latitude: endPoint.latitude, longitude: endPoint.longitude),
+        profileOverride: ORSProfile.footWalking);
+    for (int i = 0; i < directions.length; i++) {
+      points.add(LatLng(directions[i].latitude, directions[i].longitude));
     }
     setState(() {
       points;
     });
-    }
+  }
 
   Future<void> _searchLocation(String value) async {
+    // chuyển đổi giá trị tìm kiếm từ string  -> tọa dộ
     try {
       List<Location> locations = await locationFromAddress(value);
       if (locations.isNotEmpty) {
@@ -76,9 +76,11 @@ _getCurrentLocation();
           Future.delayed(Duration.zero, () {
             _mapController.move(_search, 15);
           });
-
         });
         findDirections();
+        setState(() {
+          show_direction = true;
+        });
       } else {
         setState(() {
           _coordinates = "No coordinates found";
@@ -119,7 +121,6 @@ _getCurrentLocation();
                 initialZoom: 13,
               ),
               children: [
-
                 TileLayer(
                   urlTemplate:
                       "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -140,18 +141,17 @@ _getCurrentLocation();
                         color: Colors.red,
                       ),
                     ),
-
                   ],
                 ),
-      PolylineLayer(
-        polylines: [
-          Polyline(
-            points: points,
-            strokeWidth: 5.0,
-            color: Colors.blue,
-          ),
-        ],
-      )
+                PolylineLayer(
+                  polylines: [
+                    Polyline(
+                      points: points,
+                      strokeWidth: 5.0,
+                      color: Colors.blue,
+                    ),
+                  ],
+                )
               ],
             ),
           ),
@@ -161,22 +161,107 @@ _getCurrentLocation();
             right: 20, // Ensure the TextField takes up available width
             child: Column(
               children: [
-                TextField(
+                SearchBar(
                     controller: _controller,
-                    decoration: const InputDecoration(
-                      labelText: 'Enter location',
-                    ),
                     onChanged: (value) {
                       // _location = value;
                     },
+                    leading:
+                        Icon(Icons.search, color: Colors.blueAccent.shade200),
                     onSubmitted: (value) {
                       _searchLocation(value);
                     }),
-               if(_coordinates != "")
-                 Center(child: Text(_coordinates,))
+                if (_coordinates != "")
+                  Center(
+                      child: Text(
+                    _coordinates,
+                  ))
               ],
             ),
           ),
+          if (show_direction)
+            Positioned(
+                bottom: 120,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width - 16,
+                    decoration: BoxDecoration(
+                      color: CupertinoColors.white,
+                      border: Border.all(
+                        color: Colors.grey, // Màu sắc của viền
+                        width: 1, // Độ dày của viền
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5), // Màu của bóng
+                          spreadRadius: 1, // Độ lan rộng của bóng
+                          blurRadius: 7, // Độ mờ của bóng
+                          offset: const Offset(-3, 3), // Độ lệch của bóng
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              const Text(
+                                "Khoảng cách",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "${(points.length) ~/ 15}" "KM",
+                                style: const TextStyle(
+                                    color: Colors.orange,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18),
+                              )
+                            ],
+                          ),
+                        ),
+                        Container(height: 50, width: 0.5,color : Colors.grey ),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            children: [
+                              const Text(
+                                "Thời Gian",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "${points.length}" "Phút",
+                                style: const TextStyle(
+                                    color: Colors.orange,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18),
+                              )
+                            ],
+                          ),
+                        ),
+                        Container(height: 50, width: 0.5,color : Colors.grey ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextButton(
+                            child: const Text(
+                              "Bắt Đầu",
+                              style: TextStyle(
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 19),
+                            ),
+                            onPressed: () {
+                              findDirections();
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ))
         ],
       ),
     );

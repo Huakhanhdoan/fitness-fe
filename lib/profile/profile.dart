@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_const
+import 'package:fitness/profile/heart.dart';
 import 'package:fitness/bottomSheet/bootomSheetCalo.dart';
 import 'package:fitness/bottomSheet/bottomSheetDate.dart';
 import 'package:fitness/bottomSheet/bottomSheetGender.dart';
@@ -18,7 +18,6 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   int _currentIntValue = 1500;
-  String _selectGender = "Nam";
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -55,38 +54,51 @@ class _ProfileState extends State<Profile> {
                 ],
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              child: Column(children: [
-                getOptions(Icons.male, "Giới tính", _selectGender, "gender"),
-                Container(
-                  width: MediaQuery.of(context).size.width - 40,
-                  height: 1,
-                  color: Colors.grey,
-                ),
-                getOptions(
-                    Icons.monitor_weight, "Khối lượng", "75kg", "weight"),
-                Container(
-                  width: MediaQuery.of(context).size.width - 40,
-                  height: 1,
-                  color: Colors.grey,
-                ),
-                getOptions(
-                    Icons.expand_outlined, "Chiều cao", "170cm", "height"),
-                Container(
-                  width: MediaQuery.of(context).size.width - 40,
-                  height: 1,
-                  color: Colors.grey,
-                ),
-                getOptions(Icons.cake, "Ngày sinh", "16/01/2003", "date"),
-                Container(
-                  width: MediaQuery.of(context).size.width - 40,
-                  height: 1,
-                  color: Colors.grey,
-                ),
-              ]),
+              child: Column(
+                children: [
+                  getOptions(
+                    Icons.male,
+                    "Giới tính",
+                    "Nam",
+                    "gender",
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width - 40,
+                    height: 1,
+                    color: Colors.grey,
+                  ),
+                  getOptions(
+                      Icons.monitor_weight, "Khối lượng", "75kg", "weight"),
+                  Container(
+                    width: MediaQuery.of(context).size.width - 40,
+                    height: 1,
+                    color: Colors.grey,
+                  ),
+                  getOptions(
+                      Icons.expand_outlined, "Chiều cao", "170cm", "height"),
+                  Container(
+                    width: MediaQuery.of(context).size.width - 40,
+                    height: 1,
+                    color: Colors.grey,
+                  ),
+                  getOptions(Icons.cake, "Ngày sinh", "16/01/2003", "date"),
+                  Container(
+                    width: MediaQuery.of(context).size.width - 40,
+                    height: 1,
+                    color: Colors.grey,
+                  ),
+                  getOptions(Icons.monitor_heart, "Nhịp tim", "121", "heart"),
+                  Container(
+                    width: MediaQuery.of(context).size.width - 40,
+                    height: 1,
+                    color: Colors.grey,
+                  ),
+                ],
+              ),
             ),
           ),
           const Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: EdgeInsets.only(left: 20, right: 20),
             child: Text(
               "Thiết lập mục tiêu",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -148,6 +160,12 @@ class _ProfileState extends State<Profile> {
   ) {
     return GestureDetector(
       onTap: () {
+        if (_nameCard == "Nhịp tim") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Heart()),
+          );
+        }
         if (value == "gender") {
           _openBottomSheetGender(context);
         } else if (value == "weight") {

@@ -9,19 +9,20 @@ class BottomSheetStep extends StatefulWidget {
 }
 
 class _BottomSheetStepState extends State<BottomSheetStep> {
+  int currentIntValue = 4000;
   @override
   Widget build(BuildContext context) {
-    int currentIntValue = 500;
+
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.45,
       width: MediaQuery.of(context).size.width,
       child: Column(
         children: [
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height * 0.3,
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                   child: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +53,7 @@ class _BottomSheetStepState extends State<BottomSheetStep> {
                         ),
                       ),
                       NumberPicker(
-                        itemCount: 5,
+                        itemCount: 3,
                         value: currentIntValue,
                         minValue: 500,
                         maxValue: 20000,
@@ -90,7 +91,7 @@ class _BottomSheetStepState extends State<BottomSheetStep> {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.03,
           ),
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height * 0.07,
             child: Padding(
               padding: const EdgeInsets.only(left: 100, right: 100),
@@ -104,6 +105,7 @@ class _BottomSheetStepState extends State<BottomSheetStep> {
                     child: Text(
                       "Xong",
                       style: TextStyle(
+                        fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),

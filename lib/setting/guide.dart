@@ -11,7 +11,17 @@ class Guide extends StatefulBuilder {
 class _GuideState extends State<Guide> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Center(
+      child: ListView(children: <Widget>[
+        const SizedBox(height: 70,),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text(
+            "Hướng dẫn",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+        ),
+      ]),
+    );
   }
 }
