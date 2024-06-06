@@ -1,7 +1,7 @@
 import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
 import '../components/menu.dart';
-import 'new_status.dart';
+import 'add_status_image.dart';
 
 
 class Social extends StatefulWidget {
@@ -15,96 +15,6 @@ class _SocialState extends State<Social> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // bottomNavigationBar: BottomAppBar(
-      //   color: Theme.of(context).appBarTheme.backgroundColor,
-      //   child: Row(
-      //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //     children: [
-      //       IconButton(
-      //         icon: const Icon(
-      //           Icons.home_filled,
-      //           size: 25,
-      //           color: Color(0xff262626),
-      //         ),
-      //         onPressed: () {
-      //           Navigator.pushNamed(context, '/homescreen');
-      //         },
-      //       ),
-      //       IconButton(
-      //         icon: const Icon(
-      //           Icons.search,
-      //           size: 25,
-      //           color: Color(0xff262626),
-      //         ),
-      //         onPressed: () {
-      //           Navigator.pushNamed(context, '/searchscreen');
-      //         },
-      //       ),
-      //       IconButton(
-      //         icon: const Icon(
-      //           Icons.add_box_outlined,
-      //           size: 25,
-      //           color: Color(0xff262626),
-      //         ),
-      //         onPressed: () {
-      //           // Handle favorite button press
-      //         },
-      //       ),
-      //       IconButton(
-      //         icon: const Icon(
-      //           Icons.notifications,
-      //           size: 25,
-      //           color: Color(0xff262626),
-      //         ),
-      //         onPressed: () {
-      //           Navigator.pushNamed(context, '/notification');
-      //         },
-      //       ),
-      //       IconButton(
-      //         icon: const Icon(
-      //           Icons.account_circle,
-      //           size: 25,
-      //           color: Color(0xff262626),
-      //         ),
-      //         onPressed: () {
-      //           Navigator.pushNamed(context, '/profilescreen');
-      //         },
-      //       ),
-      //     ],
-      //   ),
-      // ),
-      // appBar: AppBar(
-      //   actions: const [
-      //     Icon(
-      //       Icons.favorite,
-      //       size: 25,
-      //       color: Color(0xff262626),
-      //     ),
-      //     SizedBox(
-      //       width: 15,
-      //     ),
-      //     Padding(
-      //       padding: EdgeInsets.only(right: 10),
-      //       child: Icon(
-      //         Icons.bookmark_border,
-      //         size: 25,
-      //         color: Color(0xff262626),
-      //       ),
-      //     ),
-      //   ],
-      //   leading: const Icon(
-      //     Icons.camera_alt_outlined,
-      //     size: 35,
-      //     color: Color(0xff262626),
-      //   ),
-      //   backgroundColor: const Color(0xffFAFAFA),
-      //   centerTitle: true,
-      //   title: const Image(
-      //     image: AssetImage('assets/logo.png'),
-      //     height: 200,
-      //     width: 200,
-      //   ),
-      // ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -144,7 +54,7 @@ class _SocialState extends State<Social> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const Status(),
+                          builder: (context) => const AddStatusImage(),
                         ),
                       );
                     },
@@ -152,64 +62,6 @@ class _SocialState extends State<Social> {
                 ],
               ),
             ),
-            // SizedBox(
-            //   height: 100,
-            //   child: ListView.builder(
-            //     itemCount: 10,
-            //     scrollDirection: Axis.horizontal,
-            //     itemBuilder: (context, index) {
-            //       return Padding(
-            //         padding: const EdgeInsets.all(8.0),
-            //         child: Stack(
-            //           children: [
-            //             Container(
-            //               decoration: index == 0
-            //                   ? BoxDecoration(
-            //                 border: Border.all(
-            //                     color: Colors.white, width: 3),
-            //                 shape: BoxShape.circle,
-            //               )
-            //                   : BoxDecoration(
-            //                 border: Border.all(
-            //                   color: Colors.green,
-            //                   width: 3,
-            //                 ),
-            //                 shape: BoxShape.circle,
-            //               ),
-            //               child: CircleAvatar(
-            //                 backgroundImage: index == 0
-            //                     ? const NetworkImage(
-            //                   'https://images.pexels.com/photos/2787341/pexels-photo-2787341.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-            //                 )
-            //                     : const NetworkImage(
-            //                   'https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=300',
-            //                 ),
-            //                 radius: 40,
-            //                 child: index == 0
-            //                     ? Align(
-            //                   alignment: Alignment.bottomRight,
-            //                   child: Container(
-            //                     padding: const EdgeInsets.all(2),
-            //                     decoration: const BoxDecoration(
-            //                       color: Colors.white,
-            //                       shape: BoxShape.circle,
-            //                     ),
-            //                     child: const Icon(
-            //                       Icons.add,
-            //                       color: Colors.blue,
-            //                       size: 20,
-            //                     ),
-            //                   ),
-            //                 )
-            //                     : null,
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       );
-            //     },
-            //   ),
-            // ),
             const Divider(),
             const ListTile(
               leading: CircleAvatar(

@@ -127,9 +127,9 @@ class _SettingDeviceState extends State<SettingDevice> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Other"),
+                    Text("Chọn hệ điều hành"),
                     DropdownButton<String?>(
-                      items: ["abc", "abc", "abc"]
+                      items: ["Android", "iOS"]
                           .map<DropdownMenuItem<String?>>((e) => DropdownMenuItem(
                                 child: Text(e.toString()),
                                 value: e,
