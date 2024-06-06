@@ -1,11 +1,7 @@
-import 'package:fitness/account/loginPage.dart';
+
 import 'package:fitness/components/menu.dart';
-import 'package:fitness/onboarding/onboarding_screen.dart';
 import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 
 int? isViewed;
 void main() async {

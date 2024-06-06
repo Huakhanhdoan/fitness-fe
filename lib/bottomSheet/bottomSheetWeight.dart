@@ -11,7 +11,7 @@ class _BottomSheetWeightState extends State<BottomSheetWeight> {
   int userWeight = 50;
   @override
   Widget build(BuildContext context) {
-
+    int userWeight = 50;
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.45,
       width: MediaQuery.of(context).size.width,
