@@ -22,19 +22,19 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-   String userGender = "";
-   int userWeight = 0;
-   int userHeight = 0;
-   int userTarget = 1500;
-   String userDate = "";
-   int userCalo = 0;
+  String userGender = "";
+  int userWeight = 0;
+  int userHeight = 0;
+  int userTarget = 1500;
+  String userDate = "";
+  int userCalo = 0;
 
- @override
+  @override
   void initState() {
 
     // TODO: implement initState
     super.initState();
-    
+
     loadData();
   }
   void loadData() async {
@@ -46,7 +46,7 @@ class _ProfileState extends State<Profile> {
       userTarget = prefs.getInt('userTarget')  ?? 1500;
       userCalo = prefs.getInt('userCalo')  ?? 0;
       userDate = prefs.getString('userDate')  ?? "2020-12-12";
-     userDate =  userDate.substring(0, 10);
+      userDate =  userDate.substring(0, 10);
     });
 
   }
@@ -163,7 +163,7 @@ class _ProfileState extends State<Profile> {
                 color: Colors.grey,
               ),
               getOptions(Icons.local_fire_department_rounded, "Calories",
-                ('$userCalo'"Kcal"), "calo"),
+                  ('$userCalo'"Kcal"), "calo"),
             ]),
           ),
         ),
@@ -175,11 +175,11 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget getOptions(
-    IconData _icon,
-    String _nameCard,
-    String _data,
-    String value,
-  ) {
+      IconData _icon,
+      String _nameCard,
+      String _data,
+      String value,
+      ) {
     return GestureDetector(
 
       onTap: ()  {
@@ -192,7 +192,7 @@ class _ProfileState extends State<Profile> {
           );
         }
         if (value == "gender") {
-          
+
           _openBottomSheetGender(context);
         } else if (value == "weight") {
           _openBottomSheetWeight(context);
