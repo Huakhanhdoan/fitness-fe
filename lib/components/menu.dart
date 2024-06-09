@@ -24,7 +24,7 @@ class _MenuState extends State<Menu> {
   var history = const History();
   var profile = const Profile();
   // var setting = const Setting();
-  var social = const Social();
+  var social = Social(newPost: {},);
   int _index = 0;
   String title = "TRANG CHỦ";
 
