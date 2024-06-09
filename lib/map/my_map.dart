@@ -77,7 +77,6 @@ class _MyMapState extends State<MyMap> {
             _mapController.move(_search, 15);
           });
         });
-        findDirections();
         setState(() {
           show_direction = true;
         });
