@@ -23,7 +23,7 @@ class _SocialState extends State<Social> {
     _loadFeed();
   }
 
-  _loadFeed() async {
+  Future<void> _loadFeed() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? json = prefs.getString("fakeFeedData");
 
@@ -38,11 +38,11 @@ class _SocialState extends State<Social> {
     }
   }
 
-  _getFeed() async {
+  Future<void> _getFeed() async {
     String json = jsonEncode(fakeFeedData.toList());
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("fakeFeedData", json);
+    await prefs.setString("fakeFeedData", json);
 
     List<Map<String, dynamic>> data = jsonDecode(json).cast<Map<String, dynamic>>();
     List<ImagePost> listOfPosts = _generateFeed(data);
@@ -51,7 +51,6 @@ class _SocialState extends State<Social> {
       feedData = listOfPosts;
     });
   }
-
 
   List<ImagePost> _generateFeed(List<Map<String, dynamic>> feedData) {
     List<ImagePost> listOfPosts = [];
@@ -77,7 +76,7 @@ class _SocialState extends State<Social> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        title: Text('Social Page'),
       ),
       body: RefreshIndicator(
         onRefresh: _refresh,

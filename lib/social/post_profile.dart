@@ -5,7 +5,7 @@ import 'dart:async';
 import 'comment.dart';
 import 'profile.dart'; // Thêm import profile.dart để sử dụng ProfilePage
 
-class ImagePost extends StatefulWidget {
+class Post extends StatefulWidget {
   final String mediaUrl;
   final String username;
   final String location;
@@ -15,7 +15,7 @@ class ImagePost extends StatefulWidget {
   final String ownerId;
   final String avatarUrl;
 
-  const ImagePost({
+  const Post({
     Key? key,
     required this.mediaUrl,
     required this.username,
@@ -27,8 +27,8 @@ class ImagePost extends StatefulWidget {
     required this.avatarUrl,
   }) : super(key: key);
 
-  factory ImagePost.fromJSON(Map<String, dynamic> data) {
-    return ImagePost(
+  factory Post.fromJSON(Map<String, dynamic> data) {
+    return Post(
       username: data['username'] ?? '',
       location: data['location'] ?? '',
       mediaUrl: data['mediaUrl'] ?? '',
@@ -48,10 +48,10 @@ class ImagePost extends StatefulWidget {
   }
 
   @override
-  _ImagePostState createState() => _ImagePostState();
+  _PostState createState() => _PostState();
 }
 
-class _ImagePostState extends State<ImagePost> {
+class _PostState extends State<Post> {
   int likeCount = 0;
   bool liked = false;
   bool showHeart = false;
@@ -65,11 +65,20 @@ class _ImagePostState extends State<ImagePost> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Column(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProfilePage(userId: widget.ownerId)));
+          },
+        ),
+      ),
+      body: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          buildPostHeader(),
+          // buildPostHeader(),
           buildLikeableImage(),
           buildLikeAndCommentIcons(),
           buildLikeCount(),

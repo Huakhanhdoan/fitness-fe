@@ -1,9 +1,9 @@
 import 'package:fitness/social/social_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'data/post_data.dart';
 import 'dart:io';
-import 'package:uuid/uuid.dart';
+
+import 'data/post_data.dart';
 
 class Uploader extends StatefulWidget {
   const Uploader({Key? key}) : super(key: key);
@@ -26,10 +26,10 @@ class _UploaderState extends State<Uploader> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return SimpleDialog(
-          title: const Text('Create a Post'),
+          title: const Text('Tạo bài đăng'),
           children: <Widget>[
             SimpleDialogOption(
-              child: const Text('Take a photo'),
+              child: const Text('Chụp ảnh'),
               onPressed: () async {
                 Navigator.pop(context);
                 final pickedFile = await _picker.pickImage(
@@ -46,7 +46,7 @@ class _UploaderState extends State<Uploader> {
               },
             ),
             SimpleDialogOption(
-              child: const Text('Choose from Gallery'),
+              child: const Text('Thư viện ảnh'),
               onPressed: () async {
                 Navigator.of(context).pop();
                 final pickedFile = await _picker.pickImage(
@@ -63,7 +63,7 @@ class _UploaderState extends State<Uploader> {
               },
             ),
             SimpleDialogOption(
-              child: const Text("Cancel"),
+              child: const Text("Hủy"),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -85,26 +85,14 @@ class _UploaderState extends State<Uploader> {
       uploading = true;
     });
 
-    // Generate a unique ID for the new post
-    String postId = const Uuid().v1();
-
-    // Create a new user
-    UserModel currentUserModel = UserModel(
-      id: '1',
-      username: 'Doan',
-    );
-
     // Create a new post object
     var newPost = {
-      "postId": postId,
-      "ownerId": currentUserModel.id,
-      "username": currentUserModel.username,
-      "mediaUrl": file!.path, // cannot use local url!!!
+      "postId": UniqueKey().toString(),
+      "mediaUrl": file!.path,
       "description": descriptionController.text,
       "location": locationController.text,
       "timestamp": DateTime.now(),
       "likes": {},
-      // "avatarUrl": currentUserModel.photoUrl,
     };
 
     // Add the new post to the beginning of fakeFeedData
@@ -114,12 +102,12 @@ class _UploaderState extends State<Uploader> {
       uploading = false;
     });
 
+    // Navigate back to the SocialPage with the new post
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => Social(newPost: newPost)),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -137,14 +125,14 @@ class _UploaderState extends State<Uploader> {
           onPressed: clearImage,
         ),
         title: const Text(
-          'New Post',
+          'Bài đăng mới',
           style: TextStyle(color: Colors.black),
         ),
         actions: <Widget>[
           TextButton(
             onPressed: postImage,
             child: const Text(
-              'Post',
+              'Đăng',
               style: TextStyle(
                 color: Colors.blue,
                 fontWeight: FontWeight.bold,
@@ -167,18 +155,6 @@ class _UploaderState extends State<Uploader> {
       ),
     );
   }
-}
-
-class UserModel {
-  final String id;
-  final String username;
-  // final String photoUrl;
-
-  UserModel({
-    required this.id,
-    required this.username,
-    // required this.photoUrl,
-  });
 }
 
 class PostForm extends StatelessWidget {
@@ -207,14 +183,15 @@ class PostForm extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             const CircleAvatar(
-              backgroundImage: NetworkImage('https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png'),
+              backgroundImage: NetworkImage(
+                  'https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png'),
             ),
             SizedBox(
               width: 250.0,
               child: TextField(
                 controller: descriptionController,
                 decoration: const InputDecoration(
-                    hintText: "Write a caption...", border: InputBorder.none),
+                    hintText: "Viết trạng thái...", border: InputBorder.none),
               ),
             ),
             SizedBox(
@@ -243,7 +220,7 @@ class PostForm extends StatelessWidget {
             child: TextField(
               controller: locationController,
               decoration: const InputDecoration(
-                  hintText: "Where was this photo taken?",
+                  hintText: "Vị trí của bạn...",
                   border: InputBorder.none),
             ),
           ),

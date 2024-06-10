@@ -223,7 +223,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
-              child: Image.asset("assets/images/chatbot.gif", width: 100,height: 100,),
+              child: Image.asset("assets/images/chatbot.png", width: 90,height: 90,),
 
             ))
     ]
@@ -252,7 +252,7 @@ class _HomePageState extends State<HomePage> {
                 Colors.pink.withOpacity(0.8),
                 Colors.pink.withOpacity(0.2),
               ],
-              stops: const [0.0, 0.7], // Tỷ lệ màu sắc
+              stops: const [0.0, 0.7],
             ),
           ),
           child: Row(
