@@ -1,3 +1,4 @@
+import 'package:fitness/social/post_profile.dart';
 import 'package:fitness/social/upload_post.dart';
 import 'package:flutter/material.dart';
 import 'data/post_data.dart';
@@ -87,9 +88,9 @@ class _ProfilePageState extends State<ProfilePage>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      buildStatColumn("Posts", postCount),
-                      buildStatColumn("Followers", followerCount),
-                      buildStatColumn("Following", followingCount),
+                      buildStatColumn("Bài viết", postCount),
+                      buildStatColumn("Người theo dõi", followerCount),
+                      buildStatColumn("Đang theo dõi", followingCount),
                     ],
                   ),
                   const SizedBox(height: 16.0),
@@ -113,7 +114,7 @@ class _ProfilePageState extends State<ProfilePage>
                           isFollowing ? Colors.grey[400] : Colors.blue,
                         ),
                         child: Text(
-                          isFollowing ? "Following" : "Follow",
+                          isFollowing ? "Đang theo dõi" : "Theo dõi",
                           style: const TextStyle(color: Colors.black),
                         ),
                       ),
@@ -159,27 +160,42 @@ class _ProfilePageState extends State<ProfilePage>
 
     // Function to build user posts
     Widget buildUserPosts() {
-      List userPostMediaUrls =
-      userPosts.map((post) => post['mediaUrl']).toList();
+      List userPostMediaUrls = userPosts.map((post) => post['mediaUrl']).toList();
 
-      if (view == "grid") {
-        return GridView.count(
-          crossAxisCount: 3,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          children: userPostMediaUrls
-              .map((url) => Image.network(url))
-              .toList()
-              .cast<Widget>(),
-        );
-      } else {
-        return Column(
-          children: userPostMediaUrls
-              .map((url) => Image.network(url))
-              .toList()
-              .cast<Widget>(),
-        );
-      }
+      return view == "grid"
+          ? GridView.count(
+        crossAxisCount: 3,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        children: userPosts.map((post) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Post.fromJSON(post),
+                ),
+              );
+            },
+            child: Image.network(post['mediaUrl']),
+          );
+        }).toList(),
+      )
+          : Column(
+        children: userPosts.map((post) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Post.fromJSON(post),
+                ),
+              );
+            },
+            child: Image.network(post['mediaUrl']),
+          );
+        }).toList(),
+      );
     }
 
     return Scaffold(
@@ -199,7 +215,7 @@ class _ProfilePageState extends State<ProfilePage>
                 ),
               );
             },
-            icon: const Icon(Icons.add),
+            icon: const Icon(Icons.add, size: 25,),
           ),
         ],
       ),

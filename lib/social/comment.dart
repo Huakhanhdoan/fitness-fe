@@ -7,28 +7,28 @@ class CommentScreen extends StatefulWidget {
   final String postOwner;
   final String postMediaUrl;
 
-  const CommentScreen({Key? key, required this.postId, required this.postOwner, required this.postMediaUrl});
-
-  @override
-  _CommentScreenState createState() => _CommentScreenState(
-    postId: this.postId,
-    postOwner: this.postOwner,
-    postMediaUrl: this.postMediaUrl,
-  );
-}
-
-class _CommentScreenState extends State<CommentScreen> {
-  final String postId;
-  final String postOwner;
-  final String postMediaUrl;
-  final TextEditingController _commentController = TextEditingController();
-  List<Map<String, dynamic>> _fetchedComments = [];
-
-  _CommentScreenState({
+  const CommentScreen({
+    Key? key,
     required this.postId,
     required this.postOwner,
     required this.postMediaUrl,
-  });
+  }) : super(key: key);
+
+  @override
+  _CommentScreenState createState() => _CommentScreenState();
+}
+
+class _CommentScreenState extends State<CommentScreen> {
+  final TextEditingController _commentController = TextEditingController();
+  List<Map<String, dynamic>> _fetchedComments = [];
+
+  // Define your reactions with corresponding colors
+  final List<Map<String, dynamic>> _reactions = [
+    {"type": "like", "icon": Icons.thumb_up_outlined, "color": Colors.blue},
+    {"type": "dislike", "icon": Icons.thumb_down_outlined, "color": Colors.red},
+  ];
+
+  _CommentScreenState();
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _CommentScreenState extends State<CommentScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Comments",
+          "Bình luận",
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.white,
@@ -60,14 +60,12 @@ class _CommentScreenState extends State<CommentScreen> {
         ListTile(
           title: TextFormField(
             controller: _commentController,
-            decoration: InputDecoration(labelText: 'Write a comment...'),
-            onFieldSubmitted: addComment,
+            decoration: InputDecoration(labelText: 'Bình luận của bạn...'),
+            onFieldSubmitted: (_) => addComment(_commentController.text),
           ),
-          trailing: OutlinedButton(
-            onPressed: () {
-              addComment(_commentController.text);
-            },
-            child: Text("Post"),
+          trailing: IconButton(
+            onPressed: () => addComment(_commentController.text),
+            icon: Icon(Icons.send),
           ),
         ),
       ],
@@ -78,15 +76,55 @@ class _CommentScreenState extends State<CommentScreen> {
     return ListView.builder(
       itemCount: _fetchedComments.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(_fetchedComments[index]['username']),
-          subtitle: Text(_fetchedComments[index]['comment']),
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(_fetchedComments[index]['avatar']),
-          ),
-        );
+        return buildCommentItem(_fetchedComments[index], index);
       },
     );
+  }
+
+  Widget buildCommentItem(Map<String, dynamic> comment, int index) {
+    String username = comment['username'];
+    String commentText = comment['comment'];
+    String avatarUrl = comment['avatar'];
+    String reaction = comment['reaction'] ?? ''; // Default empty string if reaction not set
+
+    return ListTile(
+      title: Text(username),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(commentText),
+          SizedBox(height: 4),
+          buildReactionRow(index, reaction),
+        ],
+      ),
+      leading: CircleAvatar(
+        backgroundImage: NetworkImage(avatarUrl),
+      ),
+    );
+  }
+
+  Widget buildReactionRow(int commentIndex, String selectedReaction) {
+    return Row(
+      children: _reactions.map((reaction) {
+        return buildReactionButton(commentIndex, reaction['type'], reaction['icon'], reaction['color'], selectedReaction);
+      }).toList(),
+    );
+  }
+
+  Widget buildReactionButton(int commentIndex, String reactionType, IconData iconData, Color iconColor, String selectedReaction) {
+    return GestureDetector(
+      onTap: () => handleReaction(commentIndex, reactionType),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Icon(iconData, color: reactionType == selectedReaction ? iconColor : Colors.grey),
+      ),
+    );
+  }
+
+  void handleReaction(int commentIndex, String reactionType) {
+    setState(() {
+      _fetchedComments[commentIndex]['reaction'] = reactionType;
+    });
   }
 
   void addComment(String comment) {
@@ -98,6 +136,7 @@ class _CommentScreenState extends State<CommentScreen> {
           "username": currentUserModel.username,
           "comment": comment,
           "avatar": currentUserModel.photoUrl,
+          "reaction": '', // Initialize reaction as empty string
         });
       });
     }
@@ -115,7 +154,8 @@ class _CommentScreenState extends State<CommentScreen> {
 
   CurrentUserModel? getCurrentUserModel(String currentUserId) {
     Map<String, dynamic>? currentUserData =
-      fakeFeedData.firstWhere((user) => user['username'] == currentUserId, orElse: () => {});
+    fakeFeedData.firstWhere((user) => user['username'] == currentUserId,
+        orElse: () => {});
     if (currentUserData != null && currentUserData.isNotEmpty) {
       return CurrentUserModel(
         username: currentUserData['username'],
