@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
             radius: 120.0,
             lineWidth: 23.0,
             animation: true,
-            percent: (stepToday<_stepGoal) ? stepToday / _stepGoal:1 ,
+            percent: (stepToday<_stepGoal && stepToday>0) ? stepToday / _stepGoal:1 ,
             startAngle: 180,
             center: CircularPercentIndicator(
               radius: 90,
@@ -305,6 +305,9 @@ class _HomePageState extends State<HomePage> {
       _stepCount = event.steps;
 
       if(_lastUpdate != DateTime.now().toString().substring(0,10)) {
+        List<String> list = prefs.getStringList('listStep') ?? [];
+        list.add(_stepCount.toString());
+        prefs.setStringList('listStep', list);
         prefs.setInt('sumStep', _stepCount) ;
         saveLastUpdate();
       }

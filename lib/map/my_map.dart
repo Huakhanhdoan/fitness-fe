@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:location/location.dart' as loc;
@@ -26,6 +25,7 @@ class _MyMapState extends State<MyMap> {
   LatLng startPoint = const LatLng(21.0278, 105.8311);
   LatLng endPoint = const LatLng(21.0278, 155.8311);
   List<LatLng> points = [];
+  String _textSearch = "";
 
   Future<void> _getCurrentLocation() async {
     // lấy vị trí hiện tại của người dùng
@@ -48,7 +48,6 @@ class _MyMapState extends State<MyMap> {
   void findDirections() async {
     // tìm đường đi từ startpoint đế endpoint
     points = [];
-
     _getCurrentLocation();
     final directions = await _openRouteService.directionsRouteCoordsGet(
         startCoordinate: ORSCoordinate(
@@ -65,6 +64,9 @@ class _MyMapState extends State<MyMap> {
   }
 
   Future<void> _searchLocation(String value) async {
+    setState(() {
+      _textSearch = value;
+    });
     // chuyển đổi giá trị tìm kiếm từ string  -> tọa dộ
     try {
       List<Location> locations = await locationFromAddress(value);
@@ -122,7 +124,7 @@ class _MyMapState extends State<MyMap> {
               children: [
                 TileLayer(
                   urlTemplate:
-                      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                      "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 ),
                 CurrentLocationLayer(
                   alignPositionOnUpdate: AlignOnUpdate.once,
@@ -186,7 +188,7 @@ class _MyMapState extends State<MyMap> {
                   child: Container(
                     width: MediaQuery.of(context).size.width - 16,
                     decoration: BoxDecoration(
-                      color: CupertinoColors.white,
+                      color: Colors.black38,
                       border: Border.all(
                         color: Colors.grey, // Màu sắc của viền
                         width: 1, // Độ dày của viền
@@ -201,61 +203,95 @@ class _MyMapState extends State<MyMap> {
                       ],
                       borderRadius: BorderRadius.circular(20.0),
                     ),
-                    child: Row(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Column(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              const Text(
-                                "Khoảng cách",
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                               Text(
+                                'Vị trí hiện tại',
+                                style: TextStyle(color: Colors.blue.shade200,
+                                    fontWeight: FontWeight.bold, fontSize: 18),
                               ),
+                              const Icon(Icons.send_sharp, color: Colors.white,),
                               Text(
-                                "${(points.length) ~/ 15}" "KM",
-                                style: const TextStyle(
-                                    color: Colors.orange,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),
-                              )
+                                _textSearch,
+                                style: const TextStyle( color: Colors.orange,
+                                    fontWeight: FontWeight.bold, fontSize: 18),
+                              ),
                             ],
                           ),
                         ),
-                        Container(height: 50, width: 0.5,color : Colors.grey ),
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            children: [
-                              const Text(
-                                "Thời Gian",
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  const Text(
+                                    "Khoảng cách",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                                  ),
+                                  Text(
+                                    "${((points.length) / 15).toString().substring(0,3)}" " KM",
+                                    style: const TextStyle(
+                                        color: Colors.orange,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  )
+                                ],
                               ),
-                              Text(
-                                "${points.length}" "Phút",
-                                style: const TextStyle(
-                                    color: Colors.orange,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(height: 50, width: 0.5,color : Colors.grey ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextButton(
-                            child: const Text(
-                              "Bắt Đầu",
-                              style: TextStyle(
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 19),
                             ),
-                            onPressed: () {
-                              findDirections();
-                            },
-                          ),
+                            Container(
+                                height: 50, width: 0.5, color: Colors.white),
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                children: [
+                                  const Text(
+                                    "Thời Gian",
+                                    style:
+                                        TextStyle(color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "${points.length}" " Phút",
+                                    style: const TextStyle(
+                                        color: Colors.orange,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Container(
+                                height: 50, width: 0.5, color: Colors.white),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+
+                                elevation: MaterialStateProperty.all(4.0),
+    ),
+                                child: const Text(
+                                  "Tìm đường",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 19),
+                                ),
+                                onPressed: () {
+                                  findDirections();
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
