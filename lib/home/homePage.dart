@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
             radius: 120.0,
             lineWidth: 23.0,
             animation: true,
-            percent: (stepToday<_stepGoal && stepToday>0) ? stepToday / _stepGoal:1 ,
+            percent: (stepToday<_stepGoal && stepToday>=0) ? stepToday / _stepGoal:1 ,
             startAngle: 180,
             center: CircularPercentIndicator(
               radius: 90,
@@ -293,6 +293,9 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _stepGoal = prefs.getInt('userTarget') ?? 1500;
     });
+    if(prefs.getString('lastUpdate') == null ) {
+      saveLastUpdate();
+    }
     _lastUpdate = prefs.getString('lastUpdate') ?? DateTime.now().toString().substring(0,10);
 
 
