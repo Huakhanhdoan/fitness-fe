@@ -1,9 +1,9 @@
+import 'dart:async';
+import 'dart:io';
+import 'package:fitness/social/profile_comment.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'dart:async';
 
-import 'comment.dart';
-import 'profile.dart'; // Thêm import profile.dart để sử dụng ProfilePage
 
 class Post extends StatefulWidget {
   final String mediaUrl;
@@ -14,6 +14,7 @@ class Post extends StatefulWidget {
   final String postId;
   final String ownerId;
   final String avatarUrl;
+  final File? localFile;
 
   const Post({
     Key? key,
@@ -25,6 +26,7 @@ class Post extends StatefulWidget {
     required this.postId,
     required this.ownerId,
     required this.avatarUrl,
+    this.localFile,
   }) : super(key: key);
 
   factory Post.fromJSON(Map<String, dynamic> data) {
@@ -71,14 +73,13 @@ class _PostState extends State<Post> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProfilePage(userId: widget.ownerId)));
+            Navigator.pop(context);
           },
         ),
       ),
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          // buildPostHeader(),
           buildLikeableImage(),
           buildLikeAndCommentIcons(),
           buildLikeCount(),
@@ -88,38 +89,24 @@ class _PostState extends State<Post> {
     );
   }
 
-  Widget buildPostHeader() {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundImage: NetworkImage(widget.avatarUrl),
-        backgroundColor: Colors.grey,
-      ),
-      title: GestureDetector(
-        child: Text(
-          widget.username,
-          style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-        onTap: () {
-          openProfile(context, widget.ownerId);
-        },
-      ),
-      subtitle: Text(widget.location),
-      trailing: const Icon(Icons.more_vert),
-    );
-  }
-
   Widget buildLikeableImage() {
     return GestureDetector(
       onDoubleTap: () => _likePost(widget.postId),
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          CachedNetworkImage(
-            imageUrl: widget.mediaUrl,
-            fit: BoxFit.fitWidth,
-            placeholder: (context, url) => loadingPlaceHolder,
-            errorWidget: (context, url, error) => const Icon(Icons.error),
-          ),
+          if (widget.localFile != null)
+            Image.file(
+              widget.localFile!,
+              fit: BoxFit.fitWidth,
+            )
+          else
+            CachedNetworkImage(
+              imageUrl: widget.mediaUrl,
+              fit: BoxFit.fitWidth,
+              placeholder: (context, url) => loadingPlaceHolder,
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+            ),
           if (showHeart)
             Positioned(
               child: Container(
@@ -156,7 +143,7 @@ class _PostState extends State<Post> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CommentScreen(
+                builder: (context) => ProfileCommentScreen(
                   postId: widget.postId,
                   postOwner: widget.ownerId,
                   postMediaUrl: widget.mediaUrl,
@@ -171,7 +158,8 @@ class _PostState extends State<Post> {
 
   GestureDetector buildLikeIcon() {
     Color color = liked ? Colors.pink : Colors.black;
-    IconData icon = liked ? Icons.favorite_outlined : Icons.favorite_border_outlined;
+    IconData icon =
+    liked ? Icons.favorite_outlined : Icons.favorite_border_outlined;
 
     return GestureDetector(
       child: Icon(
@@ -215,13 +203,6 @@ class _PostState extends State<Post> {
     );
   }
 
-  void openProfile(BuildContext context, String ownerId) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => ProfilePage(userId: ownerId)),
-    );
-  }
-
   void _likePost(String postId) {
     bool _liked = widget.likes['user1'] == true; // Assuming user1 is logged in
 
@@ -249,3 +230,4 @@ class _PostState extends State<Post> {
     child: const Center(child: CircularProgressIndicator()),
   );
 }
+

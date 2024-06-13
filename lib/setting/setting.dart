@@ -342,7 +342,7 @@ class _SettingState extends State<Setting> {
     return GestureDetector(
       onTap: () async {
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setInt('id',0 ) ;
+        prefs.setString('id', '') ;
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
       },
       child: Padding(

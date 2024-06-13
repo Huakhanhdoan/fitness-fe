@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'data/post_data.dart';
 import 'image_post.dart';
 
 class Social extends StatefulWidget {
-  final Map<String, dynamic> newPost;
-
-  const Social({Key? key, required this.newPost}) : super(key: key);
-
+  // final Map<String, dynamic> newPost;
+  // const Social({super.key, required this.newPost});
+  const Social({super.key});
   @override
   _SocialState createState() => _SocialState();
 }
@@ -20,51 +18,45 @@ class _SocialState extends State<Social> {
   @override
   void initState() {
     super.initState();
-    _loadFeed();
+    // _loadFeed();
+    _getFeed();
   }
 
-  Future<void> _loadFeed() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? json = prefs.getString("fakeFeedData");
-
-    if (json != null) {
-      List<Map<String, dynamic>> data = jsonDecode(json).cast<Map<String, dynamic>>();
-      List<ImagePost> listOfPosts = _generateFeed(data);
-      setState(() {
-        feedData = listOfPosts;
-      });
-    } else {
-      _getFeed();
-    }
-  }
+  // Future<void> _loadFeed() async {
+  //   await _getFeed();
+  // }
 
   Future<void> _getFeed() async {
-    String json = jsonEncode(fakeFeedData.toList());
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString("fakeFeedData", json);
-
-    List<Map<String, dynamic>> data = jsonDecode(json).cast<Map<String, dynamic>>();
-    List<ImagePost> listOfPosts = _generateFeed(data);
-
-    setState(() {
-      feedData = listOfPosts;
-    });
+    try {
+      final response = await http.get(Uri.parse('https://fitness-be.onrender.com/post'));
+      if (response.statusCode == 200) {
+        List<dynamic> data = jsonDecode(response.body);
+        List<ImagePost> listOfPosts = _generateFeed(data.cast<Map<String, dynamic>>());
+        setState(() {
+          feedData = listOfPosts;
+        });
+      } else {
+        throw Exception('Failed to load feed');
+      }
+    } catch (e) {
+      print('Error loading feed: $e');
+    }
   }
 
   List<ImagePost> _generateFeed(List<Map<String, dynamic>> feedData) {
     List<ImagePost> listOfPosts = [];
 
+    // Add new post to the beginning of the list
+    // if (widget.newPost.isNotEmpty) {
+    //   listOfPosts.add(ImagePost.fromJSON(widget.newPost));
+    // }
+
+    // Add existing posts
     for (var postData in feedData) {
       listOfPosts.add(ImagePost.fromJSON(postData));
     }
 
-    // Add new post to the beginning of the list
-    if (widget.newPost.isNotEmpty) {
-      listOfPosts.insert(0, ImagePost.fromJSON(widget.newPost));
-    }
-
-    return listOfPosts;
+    return listOfPosts.reversed.toList();
   }
 
   Future<void> _refresh() async {
@@ -76,7 +68,14 @@ class _SocialState extends State<Social> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Social Page'),
+        backgroundColor: const Color.fromRGBO(48, 237, 102, 1),
+        title: const Text('Social Feed', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        )
       ),
       body: RefreshIndicator(
         onRefresh: _refresh,

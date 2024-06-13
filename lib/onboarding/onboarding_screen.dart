@@ -59,7 +59,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             onPressed: () async {
               await _storeOnBoardInfo();
               Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) =>  HomePage()));
+                  context, MaterialPageRoute(builder: (context) =>  Menu(index: 0)));
             },
             child: const Text(
               'Skip',

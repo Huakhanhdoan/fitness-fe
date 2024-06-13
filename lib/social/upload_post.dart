@@ -1,12 +1,14 @@
+import 'dart:convert';
 import 'package:fitness/social/social_page.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 import 'dart:io';
-
-import 'data/post_data.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Uploader extends StatefulWidget {
-  const Uploader({Key? key}) : super(key: key);
+  final File file;
+  final String? avatarUrl;
+  const Uploader({super.key, required this.file, this.avatarUrl});
 
   @override
   _UploaderState createState() => _UploaderState();
@@ -16,107 +18,71 @@ class _UploaderState extends State<Uploader> {
   File? file;
   TextEditingController descriptionController = TextEditingController();
   TextEditingController locationController = TextEditingController();
-  final ImagePicker _picker = ImagePicker();
-
   bool uploading = false;
 
-  Future<void> _selectImage(BuildContext parentContext) async {
-    return showDialog<Null>(
-      context: parentContext,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return SimpleDialog(
-          title: const Text('Tạo bài đăng'),
-          children: <Widget>[
-            SimpleDialogOption(
-              child: const Text('Chụp ảnh'),
-              onPressed: () async {
-                Navigator.pop(context);
-                final pickedFile = await _picker.pickImage(
-                  source: ImageSource.camera,
-                  maxWidth: 1920,
-                  maxHeight: 1200,
-                  imageQuality: 80,
-                );
-                if (pickedFile != null) {
-                  setState(() {
-                    file = File(pickedFile.path);
-                  });
-                }
-              },
-            ),
-            SimpleDialogOption(
-              child: const Text('Thư viện ảnh'),
-              onPressed: () async {
-                Navigator.of(context).pop();
-                final pickedFile = await _picker.pickImage(
-                  source: ImageSource.gallery,
-                  maxWidth: 1920,
-                  maxHeight: 1200,
-                  imageQuality: 80,
-                );
-                if (pickedFile != null) {
-                  setState(() {
-                    file = File(pickedFile.path);
-                  });
-                }
-              },
-            ),
-            SimpleDialogOption(
-              child: const Text("Hủy"),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        );
-      },
-    );
+  @override
+  void initState() {
+    super.initState();
+    file = widget.file;
   }
 
   void clearImage() {
     setState(() {
       file = null;
     });
+    Navigator.pop(context);
   }
 
-  void postImage() {
+  Future<String?> getCurrentUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString('id');
+    return userId;
+  }
+
+  void postImage() async {
     setState(() {
       uploading = true;
     });
 
-    // Create a new post object
-    var newPost = {
-      "postId": UniqueKey().toString(),
-      "mediaUrl": file!.path,
-      "description": descriptionController.text,
-      "location": locationController.text,
-      "timestamp": DateTime.now(),
-      "likes": {},
-    };
+    try {
+      var userId = await getCurrentUserId();
+      if (userId == null) {
+        throw Exception('User id not found');
+      }
 
-    // Add the new post to the beginning of fakeFeedData
-    setState(() {
-      fakeFeedData.insert(0, newPost); // Add newPost at the beginning of the list
-      file = null;
-      uploading = false;
-    });
+      var url = Uri.parse('https://fitness-be.onrender.com/post');
+      var response = await http.post(
+        url,
+        body: {
+          'user_id': userId,
+          'description': descriptionController.text,
+          'mediaUrl': file!.path,
+        },
+      );
 
-    // Navigate back to the SocialPage with the new post
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => Social(newPost: newPost)),
-    );
+      if (response.statusCode == 201) { // Check for 201 Created status
+        var responseData = jsonDecode(response.body);
+        print('Post successful: $responseData');
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Social()),
+        );
+      } else {
+        print('Failed to post: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error posting: $e');
+    } finally {
+      setState(() {
+        uploading = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return file == null
-        ? IconButton(
-      icon: const Icon(Icons.file_upload, color: Colors.white),
-      onPressed: () => _selectImage(context),
-    )
-        : Scaffold(
+    return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white70,
@@ -149,6 +115,7 @@ class _UploaderState extends State<Uploader> {
             descriptionController: descriptionController,
             locationController: locationController,
             loading: uploading,
+            avatarUrl: widget.avatarUrl,
           ),
           const Divider(),
         ],
@@ -162,14 +129,16 @@ class PostForm extends StatelessWidget {
   final TextEditingController descriptionController;
   final TextEditingController locationController;
   final bool loading;
+  final String? avatarUrl;
 
   const PostForm({
-    Key? key,
+    super.key,
     required this.imageFile,
     required this.descriptionController,
     required this.loading,
     required this.locationController,
-  }) : super(key: key);
+    required this.avatarUrl,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -182,9 +151,8 @@ class PostForm extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            const CircleAvatar(
-              backgroundImage: NetworkImage(
-                  'https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png'),
+            CircleAvatar(
+              backgroundImage: NetworkImage(avatarUrl ?? ''),
             ),
             SizedBox(
               width: 250.0,
