@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:async';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'dart:io';
 import 'comment.dart';
-import 'profile.dart'; // Thêm import profile.dart để sử dụng ProfilePage
+import 'profile.dart';
 
 class ImagePost extends StatefulWidget {
   final String mediaUrl;
@@ -16,7 +18,7 @@ class ImagePost extends StatefulWidget {
   final String avatarUrl;
 
   const ImagePost({
-    Key? key,
+    super.key,
     required this.mediaUrl,
     required this.username,
     required this.location,
@@ -25,20 +27,26 @@ class ImagePost extends StatefulWidget {
     required this.postId,
     required this.ownerId,
     required this.avatarUrl,
-  }) : super(key: key);
+  });
 
   factory ImagePost.fromJSON(Map<String, dynamic> data) {
+    String mediaUrl = data['mediaUrl'] ?? '';
+    if (!mediaUrl.startsWith('http')) {
+      mediaUrl = 'file://$mediaUrl';
+    }
+
     return ImagePost(
-      username: data['username'] ?? '',
-      location: data['location'] ?? '',
-      mediaUrl: data['mediaUrl'] ?? '',
+      username: data['user_id']['name'] ?? '',
+      location: data['user_id']['location'] ?? '',
+      mediaUrl: mediaUrl,
       likes: data['likes'] ?? {},
       description: data['description'] ?? '',
-      ownerId: data['ownerId'] ?? '',
-      postId: data['postId'] ?? '',
-      avatarUrl: data['avatarUrl'] ?? '',
+      ownerId: data['user_id']['_id'] ?? '',
+      postId: data['_id'] ?? '',
+      avatarUrl: data['user_id']['avatarUrl'] ?? '',
     );
   }
+
 
   int getLikeCount(Map<dynamic, dynamic> likes) {
     if (likes == null) {
@@ -91,7 +99,7 @@ class _ImagePostState extends State<ImagePost> {
           style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         onTap: () {
-          openProfile(context, widget.ownerId);
+          openProfile(context);
         },
       ),
       subtitle: Text(widget.location),
@@ -105,12 +113,18 @@ class _ImagePostState extends State<ImagePost> {
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          CachedNetworkImage(
-            imageUrl: widget.mediaUrl,
-            fit: BoxFit.fitWidth,
-            placeholder: (context, url) => loadingPlaceHolder,
-            errorWidget: (context, url, error) => const Icon(Icons.error),
-          ),
+          if (widget.mediaUrl.startsWith('http'))
+            CachedNetworkImage(
+              imageUrl: widget.mediaUrl,
+              fit: BoxFit.fitWidth,
+              placeholder: (context, url) => loadingPlaceHolder,
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+            ),
+          if (widget.mediaUrl.startsWith('file'))
+            Image.file(
+              File(widget.mediaUrl.replaceAll('file://', '')),
+              fit: BoxFit.fitWidth,
+            ),
           if (showHeart)
             Positioned(
               child: Container(
@@ -206,10 +220,16 @@ class _ImagePostState extends State<ImagePost> {
     );
   }
 
-  void openProfile(BuildContext context, String ownerId) {
+  void openProfile(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ProfilePage(userId: ownerId)),
+      MaterialPageRoute(builder: (context) => ProfilePage(
+          userId: widget.ownerId,
+          postId: widget.postId,
+          description: widget.description,
+          location: widget.location,
+        )
+      ),
     );
   }
 
@@ -239,4 +259,15 @@ class _ImagePostState extends State<ImagePost> {
     height: 400.0,
     child: const Center(child: CircularProgressIndicator()),
   );
+
+  // Function to fetch posts from API
+  Future<List<ImagePost>> fetchPosts() async {
+    final response = await http.get(Uri.parse('https://fitness-be.onrender.com/post'));
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+      return data.map((item) => ImagePost.fromJSON(item)).toList();
+    } else {
+      throw Exception('Failed to load posts');
+    }
+  }
 }

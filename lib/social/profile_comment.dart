@@ -3,12 +3,12 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class CommentScreen extends StatefulWidget {
+class ProfileCommentScreen extends StatefulWidget {
   final String postId;
   final String postOwner;
   final String postMediaUrl;
 
-  const CommentScreen({
+  const ProfileCommentScreen({
     Key? key,
     required this.postId,
     required this.postOwner,
@@ -16,10 +16,10 @@ class CommentScreen extends StatefulWidget {
   });
 
   @override
-  _CommentScreenState createState() => _CommentScreenState();
+  _ProfileCommentScreenState createState() => _ProfileCommentScreenState();
 }
 
-class _CommentScreenState extends State<CommentScreen> {
+class _ProfileCommentScreenState extends State<ProfileCommentScreen> {
   final TextEditingController _commentController = TextEditingController();
   List<Map<String, dynamic>> _fetchedComments = [];
   String? _selectedReactionType;
@@ -160,7 +160,7 @@ class _CommentScreenState extends State<CommentScreen> {
 
     try {
       final response = await http.post(
-        Uri.parse('https://fitness-be.onrender.com/post/${widget.postId}/comments/create'),
+        Uri.parse('https://fitness-be.onrender.com/post/${widget.postOwner}/${widget.postId}/comments/create'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -186,8 +186,10 @@ class _CommentScreenState extends State<CommentScreen> {
   void getComments() async {
     try {
       final response = await http.get(
-        Uri.parse('https://fitness-be.onrender.com/post/${widget.postId}/comments'),
+        Uri.parse('https://fitness-be.onrender.com/post/${widget.postOwner}/${widget.postId}/comments'),
       );
+      print(widget.postOwner);
+      print(widget.postId);
       if (response.statusCode == 200) {
         List<dynamic> data = jsonDecode(response.body);
         List<Map<String, dynamic>> parsedComments = data.cast<Map<String, dynamic>>();
