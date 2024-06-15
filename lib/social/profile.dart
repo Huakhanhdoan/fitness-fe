@@ -257,65 +257,65 @@ class _ProfilePageState extends State<ProfilePage>
     );
   }
 
-  File? file;
-  // final ImagePicker _picker = ImagePicker();
-
-  Future<File?> _selectImage(BuildContext parentContext) async {
-    File? selectedFile;
-    await showDialog<Null>(
-      context: parentContext,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return SimpleDialog(
-          title: const Text('Tạo bài đăng'),
-          children: <Widget>[
-            SimpleDialogOption(
-              child: const Text('Chụp ảnh'),
-              onPressed: () async {
-                final pickedFile = await ImagePicker().pickImage(
-                  source: ImageSource.camera,
-                  maxWidth: 1920,
-                  maxHeight: 1200,
-                  imageQuality: 80,
-                );
-                if (pickedFile != null) {
-                  setState(() {
-                    selectedFile = File(pickedFile.path);
-                  });
-                }
-                Navigator.pop(context);
-              },
-            ),
-            SimpleDialogOption(
-              child: const Text('Thư viện ảnh'),
-              onPressed: () async {
-                final pickedFile = await ImagePicker().pickImage(
-                  source: ImageSource.gallery,
-                  maxWidth: 1920,
-                  maxHeight: 1200,
-                  imageQuality: 80,
-                );
-                if (pickedFile != null) {
-                  setState(() {
-                    selectedFile = File(pickedFile.path);
-                  });
-                }
-                Navigator.pop(context); // Close the dialog after picking image
-              },
-            ),
-            SimpleDialogOption(
-              child: const Text("Hủy"),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        );
-      },
-    );
-
-    return selectedFile;
-  }
+  // File? file;
+  // // final ImagePicker _picker = ImagePicker();
+  //
+  // Future<File?> _selectImage(BuildContext parentContext) async {
+  //   File? selectedFile;
+  //   await showDialog<Null>(
+  //     context: parentContext,
+  //     barrierDismissible: false,
+  //     builder: (BuildContext context) {
+  //       return SimpleDialog(
+  //         title: const Text('Tạo bài đăng'),
+  //         children: <Widget>[
+  //           SimpleDialogOption(
+  //             child: const Text('Chụp ảnh'),
+  //             onPressed: () async {
+  //               final pickedFile = await ImagePicker().pickImage(
+  //                 source: ImageSource.camera,
+  //                 maxWidth: 1920,
+  //                 maxHeight: 1200,
+  //                 imageQuality: 80,
+  //               );
+  //               if (pickedFile != null) {
+  //                 setState(() {
+  //                   selectedFile = File(pickedFile.path);
+  //                 });
+  //               }
+  //               Navigator.pop(context);
+  //             },
+  //           ),
+  //           SimpleDialogOption(
+  //             child: const Text('Thư viện ảnh'),
+  //             onPressed: () async {
+  //               final pickedFile = await ImagePicker().pickImage(
+  //                 source: ImageSource.gallery,
+  //                 maxWidth: 1920,
+  //                 maxHeight: 1200,
+  //                 imageQuality: 80,
+  //               );
+  //               if (pickedFile != null) {
+  //                 setState(() {
+  //                   selectedFile = File(pickedFile.path);
+  //                 });
+  //               }
+  //               Navigator.pop(context); // Close the dialog after picking image
+  //             },
+  //           ),
+  //           SimpleDialogOption(
+  //             child: const Text("Hủy"),
+  //             onPressed: () {
+  //               Navigator.pop(context);
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  //
+  //   return selectedFile;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -327,25 +327,6 @@ class _ProfilePageState extends State<ProfilePage>
           style: const TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-            onPressed: () async {
-              File? selectedFile = await _selectImage(context);
-              if (selectedFile != null) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Uploader(file: selectedFile, avatarUrl: avatarUrl,),
-                  ),
-                );
-              }
-            },
-            icon: const Icon(
-              Icons.add,
-              size: 25,
-            ),
-          ),
-        ],
       ),
       body: ListView(
         children: <Widget>[

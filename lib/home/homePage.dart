@@ -218,7 +218,7 @@ class _HomePageState extends State<HomePage> {
       ),
         Positioned(
           bottom: 100,
-            right: -20,
+            right: 0,
             child: TextButton(
               onPressed: () {
                 Navigator.push(
@@ -228,8 +228,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
-              child: Image.asset("assets/images/chatbot.png", width: 90,height: 90,),
-
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(50.0),
+                child: Image.asset('assets/images/chatbot2.jpg', width: 70, height: 70, fit: BoxFit.fill,),
+              ),
             ))
     ]
     );
