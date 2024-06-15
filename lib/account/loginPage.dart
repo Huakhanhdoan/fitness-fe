@@ -58,18 +58,11 @@ class _LoginPageState extends State<LoginPage> {
             children: <Widget>[
 
               const SizedBox(
-                height: 140,
+                height: 80,
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
-                child: Container(
-                    width: 70,
-                    height: 70,
-                    padding: const EdgeInsets.all(15),
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Color(0xffd8d8d8)),
-                    child: const FlutterLogo()
-                ),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                child: Image.asset("assets/images/logo.png")
               ),
 
               const Padding(

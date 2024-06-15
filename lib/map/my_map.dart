@@ -109,9 +109,7 @@ class _MyMapState extends State<MyMap> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Tìm đường'),
-      ),
+
       body: Stack(
         children: [
           Positioned.fill(
@@ -157,7 +155,7 @@ class _MyMapState extends State<MyMap> {
             ),
           ),
           Positioned(
-            top: 20,
+            top: 110,
             left: 20,
             right: 20, // Ensure the TextField takes up available width
             child: Column(

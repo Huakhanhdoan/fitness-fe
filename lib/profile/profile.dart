@@ -28,6 +28,7 @@ class _ProfileState extends State<Profile> {
   int userTarget = 1500;
   String userDate = "";
   int userCalo = 0;
+  int userHeart = 100;
 
   @override
   void initState() {
@@ -45,6 +46,7 @@ class _ProfileState extends State<Profile> {
       userHeight = prefs.getInt('userHeight') ?? 170;
       userTarget = prefs.getInt('userTarget')  ?? 1500;
       userCalo = prefs.getInt('userCalo')  ?? 0;
+      userHeart = prefs.getInt('userHeart')  ?? 100;
       userDate = prefs.getString('userDate')  ?? "2020-12-12";
       userDate =  userDate.substring(0, 10);
     });
@@ -114,7 +116,7 @@ class _ProfileState extends State<Profile> {
                 height: 1,
                 color: Colors.grey,
               ),
-              getOptions(Icons.monitor_heart, "Nhịp tim", "121","heart"),
+              getOptions(Icons.monitor_heart, "Nhịp tim", "$userHeart","heart"),
               Container(
                 width: MediaQuery.of(context).size.width - 40,
                 height: 1,

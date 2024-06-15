@@ -1,10 +1,13 @@
 import 'package:fitness/chatbot/pages/chat_screen.dart';
+import 'package:fitness/history/screenChart.dart';
 import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../components/menu.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -204,10 +207,10 @@ class _HomePageState extends State<HomePage> {
               getOptions(Icons.snowshoeing, "Tổng số bước", "Các bước",
                   _stepCount.toDouble()),
               getOptions(Icons.local_fire_department_rounded, "Tổng lượng Calo",
-                  "Kcal", calories),
+                  "Kcal", _stepCount/20),
               getOptions(
-                  Icons.social_distance, "Tổng khoảng cách", "km", distance),
-              getOptions(Icons.timer, "Tổng thời gian", "phút", 360),
+                  Icons.social_distance, "Tổng khoảng cách", "km", _stepCount*0.008),
+              getOptions(Icons.timer, "Tổng thời gian", "phút", _stepCount/60),
               const SizedBox(height: 100,)
             ],
           )
@@ -237,7 +240,12 @@ class _HomePageState extends State<HomePage> {
     return GestureDetector(
       onTap: () {
 
-
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>  const Statistical(),
+          ),
+        );
       },
       child: Padding(
         padding: const EdgeInsets.all(16.0),

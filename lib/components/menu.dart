@@ -25,7 +25,7 @@ class _MenuState extends State<Menu> {
   var profile = const Profile();
   // var setting = const Setting();
   // var social = Social(newPost: {},);
-  var social = Social();
+  var social = const Social();
   int _index = 0;
   String title = "TRANG CHỦ";
 
@@ -95,7 +95,7 @@ class _MenuState extends State<Menu> {
                     ),
                     IconButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const Setting()));
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Setting()));
                         },
                         icon: const Icon(
                           Icons.settings,
