@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../components/menu.dart';
 
 class BottomSheetStep extends StatefulWidget {
   const BottomSheetStep({super.key});
@@ -9,7 +12,19 @@ class BottomSheetStep extends StatefulWidget {
 }
 
 class _BottomSheetStepState extends State<BottomSheetStep> {
-  int currentIntValue = 4000;
+  int currentIntValue = 1500;
+  Future<void> getData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      currentIntValue =   prefs.getInt('userTarget') ?? 1500;
+    });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -69,7 +84,11 @@ class _BottomSheetStepState extends State<BottomSheetStep> {
                             fontSize: 26),
                         textStyle:
                             const TextStyle(color: Colors.green, fontSize: 20),
-                        onChanged: (int value) {
+                        onChanged: (int value) async {
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          setState(() {
+                             prefs.setInt('userTarget', value) ;
+                          });
                           setState(() {
                             currentIntValue = value;
                           });
@@ -113,6 +132,8 @@ class _BottomSheetStepState extends State<BottomSheetStep> {
                 ),
                 onTap: () {
                   Navigator.pop(context);
+                  Navigator.pushReplacement(context, MaterialPageRoute(
+                      builder: (context) => const Menu(index: 4)));
                 },
               ),
             ),

@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class IntroPage2 extends StatefulWidget {
   const IntroPage2({Key? key}) : super(key: key);
@@ -19,7 +19,7 @@ class _IntroPage2 extends State<IntroPage2> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 40),
+        padding: const EdgeInsets.symmetric(horizontal: 40),
         children: [
           Center(
             child: Column(
@@ -56,14 +56,16 @@ class _IntroPage2 extends State<IntroPage2> {
                       min: 0,
                       max: 200,
                       divisions: 200, // Số bước giữa min và max
-                      onChanged: (value) {
+                      onChanged: (value) async {
                         //  saveValues();
                         setState(() {
                           userWeight = value.round();
                         });
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        prefs.setInt('userWeight', userWeight);
                       },
                     ),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     Center(
                       child: Text(
                         'Cân nặng của bạn: $userWeight' 'kg',

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../components/menu.dart';
 class BottomSheetHeight extends StatefulWidget {
   const BottomSheetHeight({super.key});
 
@@ -8,7 +11,18 @@ class BottomSheetHeight extends StatefulWidget {
 
 class _BottomSheetHeightState extends State<BottomSheetHeight> {
   int userHeight = 170;
-
+  Future<void> getData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+    userHeight =   prefs.getInt('userHeight') ?? 170;
+    });
+  }
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -51,11 +65,16 @@ class _BottomSheetHeightState extends State<BottomSheetHeight> {
                             max: 220,
                             label: '$userHeight',
                             divisions: 200, // Số bước giữa min và max
-                            onChanged: (value) {
+                            onChanged: (value) async {
+                              SharedPreferences prefs = await SharedPreferences.getInstance();
+                              setState(() {
+                                prefs.setInt('userHeight', value.round());
+                              });
                               setState(() {
                                 userHeight = value.round();
                               });
                             },
+
                           ),
                           const SizedBox(
                             height: 20,
@@ -107,6 +126,8 @@ class _BottomSheetHeightState extends State<BottomSheetHeight> {
                 ),
                 onTap: () {
                   Navigator.pop(context);
+                  Navigator.pushReplacement(context, MaterialPageRoute(
+                      builder: (context) => const Menu(index: 4)));
                 },
               ),
             ),

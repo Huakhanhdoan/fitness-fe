@@ -8,16 +8,16 @@ class BottomSheetDate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int userHeight = 170;
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height * 0.45,
       width: MediaQuery.of(context).size.width,
       child: Column(
         children: [
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height * 0.3,
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                   child: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -48,7 +48,7 @@ class BottomSheetDate extends StatelessWidget {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.03,
           ),
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height * 0.07,
             child: Padding(
               padding: const EdgeInsets.only(left: 100, right: 100),
@@ -79,4 +79,4 @@ class BottomSheetDate extends StatelessWidget {
   }
 }
 
-void setState(Null Function() param0) {}
+

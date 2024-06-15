@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class IntroPage3 extends StatefulWidget {
   const IntroPage3({Key? key}) : super(key: key);
-
   @override
   _IntroPage3 createState() => _IntroPage3();
 }
@@ -66,8 +66,15 @@ class _IntroPage3 extends State<IntroPage3> {
                       maxValue: 200,
                       step: 1,
                       haptics: true,
-                      onChanged: (value) =>
-                          setState(() => _currentIntValue = value),
+                      onChanged: (value) async {
+                        //  saveValues();
+                        setState(() {
+                          _currentIntValue = value;
+                        });
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        prefs.setInt('userHeight', value);
+                      },
+
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(color: Colors.black26),

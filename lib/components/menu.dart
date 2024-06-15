@@ -6,6 +6,7 @@ import 'package:fitness/home/homePage.dart';
 import 'package:fitness/map/my_map.dart';
 import 'package:fitness/profile/profile.dart';
 import 'package:fitness/setting/setting.dart';
+import 'package:fitness/social/social_page.dart';
 import 'package:fitness/untils/color.dart';
 import 'package:flutter/material.dart';
 
@@ -22,9 +23,11 @@ class _MenuState extends State<Menu> {
   var home = const HomePage();
   var history = const History();
   var profile = const Profile();
-  var setting = const Setting();
+  // var setting = const Setting();
+  // var social = Social(newPost: {},);
+  var social = const Social();
   int _index = 0;
-  String title = "HOME";
+  String title = "TRANG CHỦ";
 
   @override
   void initState() {
@@ -39,13 +42,13 @@ class _MenuState extends State<Menu> {
           title = "LỊCH SỬ";
           break;
         case 2:
-          title = "HỒ SƠ";
+          title = "MẠNG XÃ HỘI";
           break;
         case 3:
-          title = "CÀI ĐẶT";
+          title = "LỘ TRÌNH";
           break;
         case 4:
-          title = "LỘ TRÌNH";
+          title = "HỒ SƠ";
         default:
           title = "Lỗi";
       }
@@ -62,12 +65,12 @@ class _MenuState extends State<Menu> {
             child: (_index == 0)
                 ? home
                 : (_index == 2)
-                    ? profile
+                    ? social
                     : (_index == 1)
                         ? history
                         : (_index == 3)
-                            ? setting
-                            :  map),
+                            ? map
+                            :  profile),
         Column(
           children: [
             Container(
@@ -92,12 +95,12 @@ class _MenuState extends State<Menu> {
                     ),
                     IconButton(
                         onPressed: () {
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Setting()));
                         },
                         icon: const Icon(
-                          Icons.logout,
+                          Icons.settings,
                           color: Colors.white,
-                          size: 40,
+                          size: 25,
                         ))
                   ],
                 ),
@@ -125,14 +128,7 @@ class _MenuState extends State<Menu> {
                 ),
                 CurvedNavigationBarItem(
                   child: Icon(
-                    Icons.perm_identity,
-                    color: Colors.white,
-                    size: 35,
-                  ),
-                ),
-                CurvedNavigationBarItem(
-                  child: Icon(
-                    Icons.settings,
+                    Icons.comment_sharp,
                     color: Colors.white,
                     size: 35,
                   ),
@@ -144,6 +140,20 @@ class _MenuState extends State<Menu> {
                     size: 35,
                   ),
                 ),
+                CurvedNavigationBarItem(
+                  child: Icon(
+                    Icons.perm_identity,
+                    color: Colors.white,
+                    size: 35,
+                  ),
+                ),
+                // CurvedNavigationBarItem(
+                //   child: Icon(
+                //     Icons.settings,
+                //     color: Colors.white,
+                //     size: 35,
+                //   ),
+                // ),
               ],
               onTap: (index) {
                 setState(() {
@@ -155,14 +165,13 @@ class _MenuState extends State<Menu> {
                       title = "LỊCH SỬ";
                       break;
                     case 2:
-                      title = "HỒ SƠ";
+                      title = "MẠNG XÃ HỘI";
                       break;
                     case 3:
-                      title = "CÀI ĐẶT";
-                      break;
-                    case 4:
                       title = "LỘ TRÌNH";
                       break;
+                    case 4:
+                      title = "HỒ SƠ";
                     default:
                       title = "Lỗi";
                   }

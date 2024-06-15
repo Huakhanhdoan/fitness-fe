@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:date_picker_plus/date_picker_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class IntroPage4 extends StatefulWidget {
   const IntroPage4({super.key});
@@ -50,7 +51,9 @@ class _IntroPage4 extends State<IntroPage4> {
                 DaysPicker(
                   minDate: DateTime(2021, 1, 1),
                   maxDate: DateTime(2023, 12, 31),
-                  onDateSelected: (value) {
+                  onDateSelected: (value) async {
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    prefs.setString('userDate', value.toString());
                   // Handle selected date
                   },
                 ),

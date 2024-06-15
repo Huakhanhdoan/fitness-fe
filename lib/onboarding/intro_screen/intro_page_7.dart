@@ -19,7 +19,7 @@ class _IntroPage7 extends State<IntroPage7> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 40),
+        padding: const EdgeInsets.symmetric(horizontal: 40),
         children: [
           Center(
             child: Column(
@@ -36,7 +36,7 @@ class _IntroPage7 extends State<IntroPage7> {
                 const SizedBox(
                   height: 50,
                 ),
-                Text(
+                const Text(
                   'THIẾT LẬP NHẮC NHỞ',
                   textAlign: TextAlign.center,
                   style: TextStyle(

@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class IntroPage1 extends StatefulWidget {
   const IntroPage1({Key? key}) : super(key: key);
@@ -63,10 +64,13 @@ class _IntroPage1 extends State<IntroPage1> {
     return   Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap: () {
+        onTap: () async {
           setState(() {
             userGender = userGender == name ? "" : name;
+
           });
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString('userGender', userGender);
         },
         child: Container(
           height: 70,
