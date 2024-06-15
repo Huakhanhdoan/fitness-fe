@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:heart_bpm/chart.dart';
 import 'package:heart_bpm/heart_bpm.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/menu.dart';
 
@@ -10,7 +11,10 @@ class Heart extends StatefulWidget {
   @override
   _HeartState createState() => _HeartState();
 }
-
+Future<void> saveData(int value) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setInt('userHeart', value);
+}
 class _HeartState extends State<Heart> {
   List<SensorValue> data = [];
   List<SensorValue> bpmValues = [];
@@ -126,6 +130,7 @@ class _HeartState extends State<Heart> {
             visible: (bpmValues.isNotEmpty && !isBPMEnabled),
               child: ElevatedButton.icon(
                 onPressed: () {
+                  saveData((bpmValues[bpmValues.length - 1].value).toInt());
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => const Menu(index: 4,)),

@@ -51,11 +51,12 @@ class _SettingState extends State<Setting> {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) =>
-                      Menu(),
+                      const Menu(),
                   )
               );
             },
           ),
+          title: Text("Cài Đặt", style: TextStyle(color: AppColors.textColor, fontWeight: FontWeight.bold),),
         ),
         body: Center(
           child: Padding(
@@ -211,7 +212,7 @@ class _SettingState extends State<Setting> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(builder: (context) =>
-                                    Setting(),
+                                    const Setting(),
                                 )
                             );
                             // This is called when the user toggles the switch.
