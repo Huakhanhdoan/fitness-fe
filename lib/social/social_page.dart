@@ -18,13 +18,13 @@ class _SocialState extends State<Social> {
   @override
   void initState() {
     super.initState();
-    // _loadFeed();
+    _loadFeed();
     _getFeed();
   }
 
-  // Future<void> _loadFeed() async {
-  //   await _getFeed();
-  // }
+  Future<void> _loadFeed() async {
+    await _getFeed();
+  }
 
   Future<void> _getFeed() async {
     try {

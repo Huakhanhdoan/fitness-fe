@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ProfilePage extends StatefulWidget {
   final String postId;
@@ -257,7 +258,7 @@ class _ProfilePageState extends State<ProfilePage>
   }
 
   File? file;
-  final ImagePicker _picker = ImagePicker();
+  // final ImagePicker _picker = ImagePicker();
 
   Future<File?> _selectImage(BuildContext parentContext) async {
     File? selectedFile;
@@ -271,29 +272,33 @@ class _ProfilePageState extends State<ProfilePage>
             SimpleDialogOption(
               child: const Text('Chụp ảnh'),
               onPressed: () async {
-                final pickedFile = await _picker.pickImage(
+                final pickedFile = await ImagePicker().pickImage(
                   source: ImageSource.camera,
                   maxWidth: 1920,
                   maxHeight: 1200,
                   imageQuality: 80,
                 );
                 if (pickedFile != null) {
-                  selectedFile = File(pickedFile.path);
+                  setState(() {
+                    selectedFile = File(pickedFile.path);
+                  });
                 }
-                Navigator.pop(context); // Close the dialog after picking image
+                Navigator.pop(context);
               },
             ),
             SimpleDialogOption(
               child: const Text('Thư viện ảnh'),
               onPressed: () async {
-                final pickedFile = await _picker.pickImage(
+                final pickedFile = await ImagePicker().pickImage(
                   source: ImageSource.gallery,
                   maxWidth: 1920,
                   maxHeight: 1200,
                   imageQuality: 80,
                 );
                 if (pickedFile != null) {
-                  selectedFile = File(pickedFile.path);
+                  setState(() {
+                    selectedFile = File(pickedFile.path);
+                  });
                 }
                 Navigator.pop(context); // Close the dialog after picking image
               },
