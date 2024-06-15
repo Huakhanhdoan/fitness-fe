@@ -1,9 +1,10 @@
 import 'dart:convert';
-import 'package:fitness/social/social_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../components/menu.dart';
 
 class Uploader extends StatefulWidget {
   final File file;
@@ -66,7 +67,7 @@ class _UploaderState extends State<Uploader> {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => Social()),
+          MaterialPageRoute(builder: (context) => Menu(index: 2)),
         );
       } else {
         print('Failed to post: ${response.reasonPhrase}');

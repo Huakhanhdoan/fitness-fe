@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:io';
+import '../components/menu.dart';
 import 'comment.dart';
 import 'profile.dart';
 
@@ -87,6 +88,27 @@ class _ImagePostState extends State<ImagePost> {
     );
   }
 
+  Future<void> deletePost() async {
+    final url = Uri.parse('https://fitness-be.onrender.com/post/${widget.postId}');
+
+    try {
+      final response = await http.delete(url);
+
+      if (response.statusCode == 200) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Menu(index: 2)));
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Post deleted successfully'))
+        );
+      } else {
+        throw Exception('Failed to delete post');
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error deleting post: $e'))
+      );
+    }
+  }
+
   Widget buildPostHeader() {
     return ListTile(
       leading: CircleAvatar(
@@ -103,7 +125,19 @@ class _ImagePostState extends State<ImagePost> {
         },
       ),
       subtitle: Text(widget.location),
-      trailing: const Icon(Icons.more_vert),
+      trailing: PopupMenuButton<String>(
+        onSelected: (String result) {
+          if (result == 'delete') {
+            deletePost();
+          }
+        },
+        itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+          const PopupMenuItem<String>(
+            value: 'delete',
+            child: Text('Delete'),
+          ),
+        ],
+      ),
     );
   }
 

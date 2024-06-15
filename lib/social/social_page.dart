@@ -1,7 +1,9 @@
+import 'package:fitness/social/upload_post.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
-
+import 'dart:io';
 import 'image_post.dart';
 
 class Social extends StatefulWidget {
@@ -18,13 +20,13 @@ class _SocialState extends State<Social> {
   @override
   void initState() {
     super.initState();
-    // _loadFeed();
+    _loadFeed();
     _getFeed();
   }
 
-  // Future<void> _loadFeed() async {
-  //   await _getFeed();
-  // }
+  Future<void> _loadFeed() async {
+    await _getFeed();
+  }
 
   Future<void> _getFeed() async {
     try {
@@ -64,6 +66,65 @@ class _SocialState extends State<Social> {
     setState(() {});
   }
 
+  File? file;
+
+  Future<File?> _selectImage(BuildContext parentContext) async {
+    File? selectedFile;
+    await showDialog<Null>(
+      context: parentContext,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: const Text('Tạo bài đăng'),
+          children: <Widget>[
+            SimpleDialogOption(
+              child: const Text('Chụp ảnh'),
+              onPressed: () async {
+                final pickedFile = await ImagePicker().pickImage(
+                  source: ImageSource.camera,
+                  maxWidth: 1920,
+                  maxHeight: 1200,
+                  imageQuality: 80,
+                );
+                if (pickedFile != null) {
+                  setState(() {
+                    selectedFile = File(pickedFile.path);
+                  });
+                }
+                Navigator.pop(context);
+              },
+            ),
+            SimpleDialogOption(
+              child: const Text('Thư viện ảnh'),
+              onPressed: () async {
+                final pickedFile = await ImagePicker().pickImage(
+                  source: ImageSource.gallery,
+                  maxWidth: 1920,
+                  maxHeight: 1200,
+                  imageQuality: 80,
+                );
+                if (pickedFile != null) {
+                  setState(() {
+                    selectedFile = File(pickedFile.path);
+                  });
+                }
+                Navigator.pop(context); // Close the dialog after picking image
+              },
+            ),
+            SimpleDialogOption(
+              child: const Text("Hủy"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    return selectedFile;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,18 +138,57 @@ class _SocialState extends State<Social> {
           },
         )
       ),
-      body: RefreshIndicator(
-        onRefresh: _refresh,
-        child: feedData.isNotEmpty
-            ? ListView.builder(
-          itemCount: feedData.length,
-          itemBuilder: (context, index) {
-            return feedData[index];
-          },
-        )
-            : const Center(
-          child: CircularProgressIndicator(),
+      body: Stack(
+        children: [
+          RefreshIndicator(
+          onRefresh: _refresh,
+          child: feedData.isNotEmpty
+              ? ListView.builder(
+            itemCount: feedData.length,
+            itemBuilder: (context, index) {
+              return feedData[index];
+            },
+          )
+              : const Center(
+            child: CircularProgressIndicator(),
+          ),
         ),
+          Positioned(
+              bottom: 100,
+              right: 20,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color.fromRGBO(48, 237, 102,1),
+                  borderRadius: BorderRadius.circular(50),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black26,
+                      offset: Offset(0, 2),
+                      blurRadius: 6.0,
+                    ),
+                  ],
+                ),
+                child: IconButton(
+                  onPressed: () async {
+                    File? selectedFile = await _selectImage(context);
+                    if (selectedFile != null) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Uploader(file: selectedFile),
+                        ),
+                      );
+                    }
+                  },
+                  icon: const Icon(
+                    Icons.add,
+                    size: 40,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+          ),
+        ],
       ),
     );
   }
