@@ -68,7 +68,7 @@ class _SocialState extends State<Social> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(48, 237, 102, 1),
+        backgroundColor: Colors.white,
         title: const Text('Social Feed', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -86,7 +86,7 @@ class _SocialState extends State<Social> {
             return feedData[index];
           },
         )
-            : Center(
+            : const Center(
           child: CircularProgressIndicator(),
         ),
       ),

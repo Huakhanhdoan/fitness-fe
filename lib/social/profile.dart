@@ -120,9 +120,9 @@ class _ProfilePageState extends State<ProfilePage>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    buildStatColumn("Bài viết", postCount),
-                    buildStatColumn("Người theo dõi", followerCount),
-                    buildStatColumn("Đang theo dõi", followingCount),
+                    buildStatColumn("Post", postCount),
+                    buildStatColumn("Follower", followerCount),
+                    buildStatColumn("Following", followingCount),
                   ],
                 ),
                 const SizedBox(height: 16.0),
